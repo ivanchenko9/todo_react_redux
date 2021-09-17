@@ -1,0 +1,26 @@
+.task{
+    width: 100%;
+    display: flex;
+    padding: 5px 5px;
+    border: 2px solid black;
+    border-radius: 3px;
+    margin-bottom: 7px;
+    
+}
+.task__status{
+    width: 15%;
+    height: auto;
+}
+.task__title{
+    padding: 0px 10px;
+    width: 80%;
+    font-size: 18px;
+}
+.task__completed {
+    text-decoration: line-through #000 !important;
+    opacity: 0.4;
+}
+.task__delete{
+    width: 10%;
+    height: auto;
+}
