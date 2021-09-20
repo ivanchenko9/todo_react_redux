@@ -1,0 +1,17 @@
+{
+    "parser": "babel-eslint",
+    "env": {
+        "es6": true,
+        "browser": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "airbnb-base"
+    ],
+    "rules": {
+        "no-unused-vars":"off",
+        "max-len": "off",
+        "no-console":"off",
+        "no-debugger":"off"
+    }
+}
