@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import TodosCreator from './TodosCreator.tsx';
 import { createTaskAC, setTodosAll, setIsConfirmedAll } from '../../../../redux/reducers/todoReducer.ts';
+import todosAPI from '../../../../api/api.ts';
 
 class TodosCreatorContainer extends React.Component {
   constructor(props) {
@@ -13,6 +14,7 @@ class TodosCreatorContainer extends React.Component {
   }
 
   onConfirmAllClick = () => {
+    todosAPI.completeAll(!this.state.isConfirmedAll);
     let newArray;
     if (this.state.isConfirmedAll) {
       newArray = this.props.todosData.todosAll.map((todo) => ({

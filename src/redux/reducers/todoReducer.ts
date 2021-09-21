@@ -1,3 +1,5 @@
+import todosAPI from '../../api/api.ts';
+
 enum TodoActionTypes {
     SET_TODOS = 'SET_TODOS',
     CHANGE_IS_CONFIRMED_ALL_STATUS = 'CHANGE_IS_CONFIRMED_ALL_STATUS',
@@ -27,23 +29,7 @@ interface CreateTaskAction {
 type TodoAction = SetTodosAction | ChangeIsConfirmedAllAction | CreateTaskAction
 
 const initilState: TodoState = {
-  todosAll: [
-    {
-      id: 1,
-      isCompleted: false,
-      title: 'todo1',
-    },
-    {
-      id: 2,
-      isCompleted: false,
-      title: 'todo2',
-    },
-    {
-      id: 3,
-      isCompleted: false,
-      title: 'todo3',
-    },
-  ],
+  todosAll: [],
   isConfirmedAll: false,
 };
 
@@ -65,6 +51,7 @@ const todoReducer = (state = initilState, action: TodoAction): TodoState => {
       isCompleted: false,
       title: action.payload,
     };
+    todosAPI.addTodo(newTask);
     return {
       ...state,
       todosAll: [...state.todosAll, newTask],
