@@ -4,7 +4,13 @@ import Todo from './Todo/Todo.tsx';
 import { setTodosAll } from '../../../../../redux/reducers/todoReducer.ts';
 import todosAPI from '../../../../../api/api.ts';
 
-const TodosContainer: React.FunctionComponent = (props) => {
+interface MyProps {
+  todosAll: any[],
+  setTodosAll(newArray: any[]): void,
+  arrToDisplay: string
+}
+
+const TodosContainer: React.FunctionComponent<MyProps> = (props) => {
   const onChangeStatusClick = (todoId: number) => {
     const newArray = props.todosAll.map((todo) => {
       if (todo.id === todoId) {

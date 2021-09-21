@@ -1,7 +1,15 @@
 import React from 'react';
 import './Todo.css';
 
-const Todo: React.FunctionComponent<{id: number, title: string, isCompleted: boolean}> = (props) => (
+interface MyProps {
+    id: number,
+    title: string,
+    isCompleted: boolean,
+    onChangeStatusClick(id: number): void,
+    onDeleteTodoClick(id: number): void
+}
+
+const Todo: React.FunctionComponent<MyProps> = (props) => (
         <div className="task">
             <button className="task__status" onClick={() => props.onChangeStatusClick(props.id)}>{props.isCompleted ? 'Done' : 'In progress'}</button>
             <p className="task__title">{props.title}</p>

@@ -7,7 +7,7 @@ const instance = axios.create({
 
 const fetchTodos = () => (
   (dispatch) => {
-    instance.get().then((response) => dispatch(setTodosAll(response.data)));
+    instance.get().then((response: any) => dispatch(setTodosAll(response.data)));
   }
 );
 

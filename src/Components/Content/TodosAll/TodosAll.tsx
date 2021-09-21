@@ -5,7 +5,11 @@ import TodosCreatorContainer from './TodosCreater/TodosCreatorContainer.tsx';
 import Settings from './Settings/Settings.tsx';
 import fetchTodos from '../../../redux/asyncActions/todoAsync.ts';
 
-class TodosAll extends React.Component {
+type MyProps = {
+  fetchTodos(): void
+}
+
+class TodosAll extends React.Component<MyProps> {
   componentDidMount() {
     this.props.fetchTodos();
   }

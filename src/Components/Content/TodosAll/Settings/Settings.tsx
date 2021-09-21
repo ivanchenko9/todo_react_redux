@@ -5,7 +5,16 @@ import TodosCreatorContainer from './TodosContainer/TodosContainer.tsx';
 import './Settings.css';
 import todosAPI from '../../../../api/api.ts';
 
-class Settings extends React.Component {
+interface MyProps {
+  todosAll: any[],
+  setTodosAll(newArray: any[]): any
+}
+
+interface MyState {
+  arrToDisplay: string,
+}
+
+class Settings extends React.Component<MyProps, MyState> {
   constructor(props) {
     super(props);
     this.state = {

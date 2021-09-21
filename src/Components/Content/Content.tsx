@@ -7,7 +7,7 @@ const Content: React.FunctionComponent = () => (
         <>
             <Registration/>
             <Auth/>
-            <TodosAll />
+            <TodosAll/>
         </>
 );
 
