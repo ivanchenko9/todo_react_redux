@@ -1,20 +1,44 @@
 import React from 'react';
-import './Todo.css';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import Checkbox from '@mui/material/Checkbox';
+import './Todo';
 
 interface MyProps {
-    id: number,
-    title: string,
-    isCompleted: boolean,
-    onChangeStatusClick(id: number): void,
-    onDeleteTodoClick(id: number): void
+  id: number;
+  title: string;
+  isCompleted: boolean;
+  onChangeStatusClick(id: number): void;
+  onDeleteTodoClick(id: number): void;
 }
 
-const Todo: React.FunctionComponent<MyProps> = (props) => (
-        <div className="task">
-            <button className="task__status" onClick={() => props.onChangeStatusClick(props.id)}>{props.isCompleted ? 'Done' : 'In progress'}</button>
-            <p className="task__title">{props.title}</p>
-            <button className="task__delete" onClick={() => props.onDeleteTodoClick(props.id)}>Delete</button>
-        </div>
-);
+const Todo: React.FunctionComponent<MyProps> = ({
+  id,
+  isCompleted,
+  title,
+  onChangeStatusClick,
+  onDeleteTodoClick,
+}) => {
+  const onChangeClick = () => {
+    onChangeStatusClick(id);
+  };
+  const onDeleteClick = () => {
+    onDeleteTodoClick(id);
+  };
+
+  return (
+    <div className="task">
+      <Checkbox
+        checked={isCompleted}
+        onClick={onChangeClick}
+        sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }}
+      />
+      <p className={`task__title ${isCompleted ? 'done' : ''}`}>{title}</p>
+      <IconButton onClick={onDeleteClick} color="error" aria-label="delete">
+        <DeleteIcon />
+      </IconButton>
+    </div>
+  );
+};
 
 export default Todo;

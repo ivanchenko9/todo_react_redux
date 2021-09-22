@@ -1,13 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import TodosCreatorContainer from './TodosCreater/TodosCreatorContainer.tsx';
-// import TodosContainer from './Settings/TodosContainer/TodosContainer.tsx';
-import Settings from './Settings/Settings.tsx';
-import fetchTodos from '../../../redux/asyncActions/todoAsync.ts';
+import TodosCreatorContainer from './TodosCreater/TodosCreatorContainer';
+import Settings from './Settings/Settings';
+import fetchTodos from '../../../redux/asyncActions/todoAsync';
 
 type MyProps = {
-  fetchTodos(): void
-}
+  fetchTodos(): void;
+};
 
 class TodosAll extends React.Component<MyProps> {
   componentDidMount() {
@@ -16,10 +15,10 @@ class TodosAll extends React.Component<MyProps> {
 
   render() {
     return (
-        <>
+      <>
         <TodosCreatorContainer />
-        <Settings/>
-        </>
+        <Settings />
+      </>
     );
   }
 }

@@ -16,7 +16,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.tsx', '.css', '.png', '.jpeg', '.svg'],
+    extensions: ['.js', '.jsx', '.tsx', '.css', '.png', '.jpeg', '.svg', '.ts'],
     alias: {
       '@styles': path.resolve(__dirname, 'src/styles'),
       '@': path.resolve(__dirname, 'src'),
@@ -61,42 +61,58 @@ module.exports = {
       {
         test: /\.m?js$/,
         exclude: /node_modules/,
-        use: [{
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env'],
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env'],
+            },
           },
-        }, 'eslint-loader'],
+          'eslint-loader',
+        ],
       },
       {
         test: /\.m?ts$/,
         exclude: /node_modules/,
-        use: [{
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env', '@babel/preset-typescript'],
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env', '@babel/preset-typescript'],
+            },
           },
-        }, 'eslint-loader'],
+          'eslint-loader',
+        ],
       },
       {
         test: /\.m?jsx$/,
         exclude: /node_modules/,
-        use: [{
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env', '@babel/preset-react'],
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env', '@babel/preset-react'],
+            },
           },
-        }, 'eslint-loader'],
+          'eslint-loader',
+        ],
       },
       {
         test: /\.m?tsx$/,
         exclude: /node_modules/,
-        use: [{
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                '@babel/preset-env',
+                '@babel/preset-react',
+                '@babel/preset-typescript',
+              ],
+            },
           },
-        }, 'eslint-loader'],
+          'eslint-loader',
+        ],
       },
     ],
   },

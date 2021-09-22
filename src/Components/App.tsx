@@ -1,13 +1,13 @@
 import React from 'react';
-import './App.css';
-import Header from './Header/Header.tsx';
-import Content from './Content/Content.tsx';
+import './App';
+import Header from './Header/Header';
+import Content from './Content/Content';
 
-const App: React.FunctionComponent = ({ store }) => (
-        <div className="container">
-           <Header/>
-           <Content store={store}/>
-        </div>
+const App: React.FunctionComponent = () => (
+  <div className="container">
+    <Header />
+    <Content />
+  </div>
 );
 
 export default App;

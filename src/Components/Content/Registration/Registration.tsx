@@ -1,8 +1,6 @@
 import React from 'react';
-import './Registration.css';
+import './Registration';
 
-const Registration: React.FunctionComponent = () => (
-        <div></div>
-);
+const Registration: React.FunctionComponent = () => <div></div>;
 
 export default Registration;

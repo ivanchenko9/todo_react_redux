@@ -1,8 +1,6 @@
 import React from 'react';
-import './Auth.css';
+import './Auth';
 
-const Auth: React.FunctionComponent = () => (
-        <div></div>
-);
+const Auth: React.FunctionComponent = () => <div></div>;
 
 export default Auth;

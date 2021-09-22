@@ -1,20 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Todo from './Todo/Todo.tsx';
-import { setTodosAll } from '../../../../../redux/reducers/todoReducer.ts';
-import todosAPI from '../../../../../api/api.ts';
+import Todo from './Todo/Todo';
+import { setTodosAll } from '../../../../../redux/reducers/todoReducer';
+import { ITodos } from '../../../../../redux/types';
+import todosAPI from '../../../../../api/api';
 
 interface MyProps {
-  todosAll: any[],
-  setTodosAll(newArray: any[]): void,
-  arrToDisplay: string
+  todosAll: ITodos[];
+  setTodosAll(newArray: ITodos[]): void;
+  arrToDisplay: string;
 }
 
-const TodosContainer: React.FunctionComponent<MyProps> = (props) => {
+const TodosContainer: React.FunctionComponent<MyProps> = ({
+  todosAll,
+  arrToDisplay,
+  setTodosAll,
+}) => {
   const onChangeStatusClick = (todoId: number) => {
-    const newArray = props.todosAll.map((todo) => {
+    const newArray = todosAll.map((todo: ITodos) => {
       if (todo.id === todoId) {
-        todosAPI.updateTodo(todoId, props.todosAll);
+        todosAPI.updateTodo(todoId, todosAll);
         return {
           ...todo,
           isCompleted: !todo.isCompleted,
@@ -22,53 +27,55 @@ const TodosContainer: React.FunctionComponent<MyProps> = (props) => {
       }
       return { ...todo };
     });
-    props.setTodosAll(newArray);
+    setTodosAll(newArray);
   };
 
   const onDeleteTodoClick = (todoId: number) => {
     todosAPI.deleteTodo(todoId);
-    const newArray = props.todosAll.filter((todo) => todo.id !== todoId);
-    props.setTodosAll(newArray);
+    const newArray = todosAll.filter((todo: ITodos) => todo.id !== todoId);
+    setTodosAll(newArray);
   };
 
-  const displaySelectedArr = (selectedArray) => {
-    let todosToRender = selectedArray;
-    todosToRender = todosToRender.map(
-      (todo) => <Todo key={todo.id}
-                    id={todo.id}
-                    title={todo.title}
-                    isCompleted={todo.isCompleted}
-                    onChangeStatusClick={onChangeStatusClick}
-                    onDeleteTodoClick={onDeleteTodoClick}/>,
-    );
+  const displaySelectedArr = (selectedArray: ITodos[]) => {
+    let todosToRender: ITodos[] = selectedArray;
+    todosToRender = todosToRender.map((todo: ITodos) => (
+      <Todo
+        key={todo.id}
+        id={todo.id}
+        title={todo.title}
+        isCompleted={todo.isCompleted}
+        onChangeStatusClick={onChangeStatusClick}
+        onDeleteTodoClick={onDeleteTodoClick}
+      />
+    ));
     return todosToRender;
   };
 
   const getTodosInProgress = () => {
-    const todosInProgress = props.todosAll.filter((todo) => todo.isCompleted === false);
+    const todosInProgress = todosAll.filter(
+      (todo: ITodos) => todo.isCompleted === false,
+    );
     return todosInProgress;
   };
 
   const getTodosDone = () => {
-    const todosCompleted = props.todosAll.filter((todo) => todo.isCompleted === true);
+    const todosCompleted = todosAll.filter(
+      (todo: ITodos) => todo.isCompleted === true,
+    );
     return todosCompleted;
   };
 
   const checkTypeOfArrayToDisplay = () => {
-    if (props.arrToDisplay === 'active') {
+    if (arrToDisplay === 'active') {
       return displaySelectedArr(getTodosInProgress());
     }
-    if (props.arrToDisplay === 'completed') {
+    if (arrToDisplay === 'completed') {
       return displaySelectedArr(getTodosDone());
     }
-    return displaySelectedArr(props.todosAll);
+    return displaySelectedArr(todosAll);
   };
 
-  return (
-      <>
-        {checkTypeOfArrayToDisplay()}
-      </>
-  );
+  return <>{checkTypeOfArrayToDisplay()}</>;
 };
 
 const mapStateToProps = (state) => ({
