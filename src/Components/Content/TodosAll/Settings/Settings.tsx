@@ -17,17 +17,15 @@ interface MyState {
   arrToDisplay: string;
 }
 
-class Settings extends React.Component<MyProps, MyState> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      arrToDisplay: 'all',
-    };
-  }
+const Settings: React.FunctionComponent<MyProps> = ({
+  todosAll,
+  setTodosAll,
+}) => {
+  const [arrToDisplay, setArrToDisplay] = React.useState('all');
 
-  calcTodoAmount = () => {
-    if (this.props.todosAll.length) {
-      const todoAmount = this.props.todosAll.reduce((total, curent) => {
+  const calcTodoAmount = () => {
+    if (todosAll.length) {
+      const todoAmount = todosAll.reduce((total, curent) => {
         if (!curent.isCompleted) {
           return total + 1;
         }
@@ -38,62 +36,49 @@ class Settings extends React.Component<MyProps, MyState> {
     return 0;
   };
 
-  onClearCompletedClick = () => {
+  const onClearCompletedClick = () => {
     todosAPI.clearDone();
-    const newArray = this.props.todosAll.filter(
-      (todo) => todo.isCompleted !== true,
+    const newArray: ITodos[] = todosAll.filter(
+      (todo: ITodos) => todo.isCompleted !== true,
     );
-    this.props.setTodosAll(newArray);
+    setTodosAll(newArray);
   };
 
-  onChengeStatusAll = () => {
-    this.setState((prev) => ({
-      ...prev,
-      ...{ arrToDisplay: 'all' },
-    }));
+  const onChengeStatusAll = () => {
+    setArrToDisplay('all');
   };
 
-  onChengeStatusActive = () => {
-    this.setState((prev) => ({
-      ...prev,
-      ...{ arrToDisplay: 'active' },
-    }));
+  const onChengeStatusActive = () => {
+    setArrToDisplay('active');
   };
 
-  onChengeStatusCompleted = () => {
-    this.setState((prev) => ({
-      ...prev,
-      ...{ arrToDisplay: 'completed' },
-    }));
+  const onChengeStatusCompleted = () => {
+    setArrToDisplay('completed');
   };
 
-  render() {
-    return (
-      <>
-        <TodosCreatorContainer arrToDisplay={this.state.arrToDisplay} />
-        <div className="display__settings">
-          <p className="task__amount">
-            {' '}
-            <span className="task__amount__data">
-              {this.calcTodoAmount()}
-            </span>{' '}
-            items left
-          </p>
-          <div className="display__modes">
-            <ButtonGroup variant="text" aria-label="text button group">
-              <Button onClick={this.onChengeStatusAll}>All</Button>
-              <Button onClick={this.onChengeStatusActive}>Active</Button>
-              <Button onClick={this.onChengeStatusCompleted}>Completed</Button>
-            </ButtonGroup>
-          </div>
-          <Button variant="contained" onClick={this.onClearCompletedClick}>
-            Clear complited
-          </Button>
+  return (
+    <>
+      <TodosCreatorContainer arrToDisplay={arrToDisplay} />
+      <div className="display__settings">
+        <p className="task__amount">
+          {' '}
+          <span className="task__amount__data">{calcTodoAmount()}</span> items
+          left
+        </p>
+        <div className="display__modes">
+          <ButtonGroup variant="text" aria-label="text button group">
+            <Button onClick={onChengeStatusAll}>All</Button>
+            <Button onClick={onChengeStatusActive}>Active</Button>
+            <Button onClick={onChengeStatusCompleted}>Completed</Button>
+          </ButtonGroup>
         </div>
-      </>
-    );
-  }
-}
+        <Button variant="contained" onClick={onClearCompletedClick}>
+          Clear complited
+        </Button>
+      </div>
+    </>
+  );
+};
 
 const mapStateToProps = (state) => ({
   todosAll: state.todoReducer.todosAll,

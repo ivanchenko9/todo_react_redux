@@ -1,11 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import TodosCreator from './TodosCreator';
-import {
-  createTaskAC,
-  setTodosAll,
-  setIsConfirmedAll,
-} from '../../../../redux/reducers/todoReducer';
+import { createTaskAC, setTodosAll, setIsConfirmedAll } from '../../../../redux/reducers/todoReducer';
 import { ITodos } from '../../../../redux/types';
 import todosAPI from '../../../../api/api';
 
@@ -16,69 +12,56 @@ interface MyProps {
   createTaskAC(newTask: String): void;
 }
 
-interface MyState {
-  inputValue: string;
-  isConfirmedAll: boolean;
-}
+const TodosCreatorContainer: React.FunctionComponent<MyProps> = ({
+  todosAll,
+  setTodosAll,
+  setIsConfirmedAll,
+  createTaskAC,
+}) => {
+  const [inputValue, setInputValue] = React.useState<string>('');
+  const [isConfirmedAllStatus, setIsConfirmedAllStatus] = React.useState<boolean>(false);
 
-class TodosCreatorContainer extends React.Component<MyProps, MyState> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      inputValue: '',
-      isConfirmedAll: false,
-    };
-  }
-
-  onConfirmAllClick = () => {
-    todosAPI.completeAll(!this.state.isConfirmedAll);
+  const onConfirmAllClick = () => {
+    todosAPI.completeAll(!isConfirmedAllStatus);
     let newArray: ITodos[];
-    if (this.state.isConfirmedAll) {
-      newArray = this.props.todosAll.map((todo: ITodos) => ({
+    if (isConfirmedAllStatus) {
+      newArray = todosAll.map((todo: ITodos) => ({
         ...todo,
         isCompleted: false,
       }));
     } else {
-      newArray = this.props.todosAll.map((todo: ITodos) => ({
+      newArray = todosAll.map((todo: ITodos) => ({
         ...todo,
         isCompleted: true,
       }));
     }
-    this.setState((prev) => ({
-      ...prev,
-      ...{ isConfirmedAll: !this.state.isConfirmedAll },
-    }));
-    this.props.setTodosAll(newArray);
-    this.props.setIsConfirmedAll(this.state.isConfirmedAll);
+    setIsConfirmedAllStatus(!isConfirmedAllStatus);
+    setTodosAll(newArray);
+    setIsConfirmedAll(isConfirmedAllStatus);
   };
 
-  onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState((prev) => ({
-      ...prev,
-      ...{ inputValue: event.target.value },
-    }));
+  const onChangeInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInputValue(event.target.value);
   };
 
-  onAddTaskClick = (event: React.KeyboardEvent) => {
+  const onAddTaskClick = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
-      if (this.state.inputValue !== '') {
-        this.props.createTaskAC(this.state.inputValue);
-        this.setState((prev) => ({ ...prev, ...{ inputValue: '' } }));
+      if (inputValue !== '') {
+        createTaskAC(inputValue);
+        setInputValue('');
       }
     }
   };
 
-  render() {
-    return (
-      <TodosCreator
-        onChangeInput={this.onChangeInput}
-        onAddTaskClick={this.onAddTaskClick}
-        inputValue={this.state.inputValue}
-        onConfirmAllClick={this.onConfirmAllClick}
-      />
-    );
-  }
-}
+  return (
+    <TodosCreator
+      onChangeInput={onChangeInput}
+      onAddTaskClick={onAddTaskClick}
+      inputValue={inputValue}
+      onConfirmAllClick={onConfirmAllClick}
+    />
+  );
+};
 
 const mapStateToProps = (state) => ({
   todosAll: state.todoReducer.todosAll,
@@ -90,7 +73,4 @@ const mapDispatchToProps = {
   setIsConfirmedAll,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(TodosCreatorContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(TodosCreatorContainer);

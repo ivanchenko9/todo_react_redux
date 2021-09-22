@@ -8,20 +8,18 @@ type MyProps = {
   fetchTodos(): void;
 };
 
-class TodosAll extends React.Component<MyProps> {
-  componentDidMount() {
-    this.props.fetchTodos();
-  }
+const TodosAll: React.FunctionComponent<MyProps> = ({ fetchTodos }) => {
+  React.useEffect(() => {
+    fetchTodos();
+  }, []);
 
-  render() {
-    return (
-      <>
-        <TodosCreatorContainer />
-        <Settings />
-      </>
-    );
-  }
-}
+  return (
+    <section>
+      <TodosCreatorContainer />
+      <Settings />
+    </section>
+  );
+};
 
 const mapDispatchToProps = {
   fetchTodos,
