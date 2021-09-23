@@ -25,12 +25,13 @@ const TodosCreator: React.FunctionComponent<MyProps> = ({
       </Button>
       <div className={classes.task__input}>
         <TextField
-          id="standard-basic"
+          id="fullWidth"
           label="What needs to be done?"
           variant="standard"
           value={inputValue}
           onChange={onChangeInput}
           onKeyPress={onAddTaskClick}
+          fullWidth
         />
       </div>
     </div>

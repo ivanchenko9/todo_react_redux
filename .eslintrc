@@ -4,16 +4,8 @@
     "es6": true,
     "browser": true
   },
-  // , "prettier"
   "plugins": ["react", "@typescript-eslint"],
-  "extends": [
-    "eslint:recommended",
-    "airbnb-base",
-    "plugin:react/recommended"
-    // "plugin:prettier/recommended",
-    // "prettier",
-    // "plugin:@typescript-eslint/recommended"
-  ],
+  "extends": ["eslint:recommended", "airbnb-base", "plugin:react/recommended"],
   "rules": {
     "no-unused-vars": "off",
     "max-len": "off",
