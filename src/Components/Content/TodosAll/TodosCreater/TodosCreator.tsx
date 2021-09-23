@@ -2,6 +2,7 @@ import React from 'react';
 import './TodosCreator';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import useStyles from '../../../../styles';
 
 interface MyProps {
   onConfirmAllClick(): void;
@@ -15,26 +16,25 @@ const TodosCreator: React.FunctionComponent<MyProps> = ({
   inputValue,
   onChangeInput,
   onAddTaskClick,
-}) => (
-  <div className="create__task">
-    <Button
-      variant="contained"
-      onClick={onConfirmAllClick}
-      className="confirme__all"
-    >
-      Confirm all
-    </Button>
-    <div className="task__input">
-      <TextField
-        id="standard-basic"
-        label="What needs to be done?"
-        variant="standard"
-        value={inputValue}
-        onChange={onChangeInput}
-        onKeyPress={onAddTaskClick}
-      />
+}) => {
+  const classes = useStyles();
+  return (
+    <div className={classes.create__task}>
+      <Button variant="contained" onClick={onConfirmAllClick}>
+        Confirm all
+      </Button>
+      <div className={classes.task__input}>
+        <TextField
+          id="standard-basic"
+          label="What needs to be done?"
+          variant="standard"
+          value={inputValue}
+          onChange={onChangeInput}
+          onKeyPress={onAddTaskClick}
+        />
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default TodosCreator;

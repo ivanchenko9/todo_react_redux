@@ -7,6 +7,7 @@ import TodosCreatorContainer from './TodosContainer/TodosContainer';
 import './Settings';
 import { ITodos } from '../../../../redux/types';
 import todosAPI from '../../../../api/api';
+import useStyles from '../../../../styles';
 
 interface MyProps {
   todosAll: ITodos[];
@@ -17,11 +18,9 @@ interface MyState {
   arrToDisplay: string;
 }
 
-const Settings: React.FunctionComponent<MyProps> = ({
-  todosAll,
-  setTodosAll,
-}) => {
+const Settings: React.FunctionComponent<MyProps> = ({ todosAll, setTodosAll }) => {
   const [arrToDisplay, setArrToDisplay] = React.useState('all');
+  const classes = useStyles();
 
   const calcTodoAmount = () => {
     if (todosAll.length) {
@@ -38,9 +37,7 @@ const Settings: React.FunctionComponent<MyProps> = ({
 
   const onClearCompletedClick = () => {
     todosAPI.clearDone();
-    const newArray: ITodos[] = todosAll.filter(
-      (todo: ITodos) => todo.isCompleted !== true,
-    );
+    const newArray: ITodos[] = todosAll.filter((todo: ITodos) => todo.isCompleted !== true);
     setTodosAll(newArray);
   };
 
@@ -59,13 +56,12 @@ const Settings: React.FunctionComponent<MyProps> = ({
   return (
     <>
       <TodosCreatorContainer arrToDisplay={arrToDisplay} />
-      <div className="display__settings">
-        <p className="task__amount">
+      <div className={classes.display__settings}>
+        <p className={classes.task__amount}>
           {' '}
-          <span className="task__amount__data">{calcTodoAmount()}</span> items
-          left
+          <span>{calcTodoAmount()}</span> items left
         </p>
-        <div className="display__modes">
+        <div className={classes.display__modes}>
           <ButtonGroup variant="text" aria-label="text button group">
             <Button onClick={onChengeStatusAll}>All</Button>
             <Button onClick={onChengeStatusActive}>Active</Button>
