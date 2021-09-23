@@ -1,6 +1,6 @@
-import React from 'react';
-import './Registration';
+import React from 'react'
+import './Registration'
 
-const Registration: React.FunctionComponent = () => <section></section>;
+const Registration: React.FunctionComponent = () => <section></section>
 
-export default Registration;
+export default Registration

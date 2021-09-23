@@ -1,6 +1,6 @@
-import React from 'react';
-import './Auth';
+import React from 'react'
+import './Auth'
 
-const Auth: React.FunctionComponent = () => <section></section>;
+const Auth: React.FunctionComponent = () => <section></section>
 
-export default Auth;
+export default Auth

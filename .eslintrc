@@ -4,7 +4,16 @@
     "es6": true,
     "browser": true
   },
-  "extends": ["eslint:recommended", "airbnb-base"],
+  // , "prettier"
+  "plugins": ["react", "@typescript-eslint"],
+  "extends": [
+    "eslint:recommended",
+    "airbnb-base",
+    "plugin:react/recommended"
+    // "plugin:prettier/recommended",
+    // "prettier",
+    // "plugin:@typescript-eslint/recommended"
+  ],
   "rules": {
     "no-unused-vars": "off",
     "max-len": "off",
@@ -17,6 +26,7 @@
     "import/no-unresolved": "off",
     "implicit-arrow-linebreak": "off",
     "no-shadow": "off",
-    "object-curly-newline": "off"
+    "object-curly-newline": "off",
+    "operator-linebreak": "off"
   }
 }

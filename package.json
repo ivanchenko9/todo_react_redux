@@ -9,6 +9,11 @@
     "build": "cross-env NODE_ENV=production webpack --mode production",
     "start": "cross-env NODE_ENV=development webpack serve --mode development --open"
   },
+  "prettier": {
+    "singleQuote": true,
+    "semi": true,
+    "trailingComma": "all"
+  },
   "browserList": "> 0.25%, not dead",
   "keywords": [
     "react",
@@ -49,8 +54,12 @@
     "@types/node": "^16.9.2",
     "@types/react": "^17.0.21",
     "@types/react-dom": "^17.0.9",
+    "@typescript-eslint/eslint-plugin": "^4.31.2",
     "axios": "^0.21.4",
     "dom": "^0.0.3",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.26.0",
     "jss-plugin-global": "^10.8.0",
     "normalize.css": "^8.0.1",
     "prettier": "^2.4.1",

@@ -21,7 +21,9 @@ const todosAPI = {
   addTodo(rawTodo: any) {
     try {
       const stringifyTodo: any = JSON.stringify(rawTodo);
-      return instance.post('/todos', stringifyTodo).then((response: any) => console.log(response.data));
+      return instance
+        .post('/todos', stringifyTodo)
+        .then((response: any) => console.log(response.data));
     } catch (error) {
       console.error(error);
     }
@@ -39,7 +41,9 @@ const todosAPI = {
         isCompleted: newTodoStatus,
       };
       const parsedQuerySetting: any = JSON.stringify(rawQuerySetting);
-      return instance.post('/todos/update', parsedQuerySetting).then((response: any) => console.log(response.data));
+      return instance
+        .post('/todos/update', parsedQuerySetting)
+        .then((response: any) => console.log(response.data));
     } catch (error) {
       console.error(error);
     }
@@ -50,14 +54,18 @@ const todosAPI = {
         id: selectedId,
       };
       const parsedQuerySetting: any = JSON.stringify(rawQuerySetting);
-      return instance.post('/todos/delete', parsedQuerySetting).then((response: any) => console.log(response.data));
+      return instance
+        .post('/todos/delete', parsedQuerySetting)
+        .then((response: any) => console.log(response.data));
     } catch (error) {
       console.error(error);
     }
   },
   clearDone() {
     try {
-      return instance.post('/todos/cleardone').then((response: any) => console.log(response.data));
+      return instance
+        .post('/todos/cleardone')
+        .then((response: any) => console.log(response.data));
     } catch (error) {
       console.error(error);
     }
@@ -68,7 +76,9 @@ const todosAPI = {
     };
     const parsedQuerySetting: any = JSON.stringify(rawQuerySetting);
     try {
-      return instance.post('/todos/completeall', parsedQuerySetting).then((response: any) => console.log(response.data));
+      return instance
+        .post('/todos/completeall', parsedQuerySetting)
+        .then((response: any) => console.log(response.data));
     } catch (error) {
       console.error(error);
     }

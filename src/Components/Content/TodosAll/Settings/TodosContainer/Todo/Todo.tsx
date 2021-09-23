@@ -12,7 +12,13 @@ interface MyProps {
   onDeleteTodoClick(id: number): void;
 }
 
-const Todo: React.FunctionComponent<MyProps> = ({ id, isCompleted, title, onChangeStatusClick, onDeleteTodoClick }) => {
+const Todo: React.FunctionComponent<MyProps> = ({
+  id,
+  isCompleted,
+  title,
+  onChangeStatusClick,
+  onDeleteTodoClick,
+}) => {
   const classes = useStyles();
   const onChangeClick = () => {
     onChangeStatusClick(id);
@@ -23,8 +29,18 @@ const Todo: React.FunctionComponent<MyProps> = ({ id, isCompleted, title, onChan
 
   return (
     <div className={classes.task}>
-      <Checkbox checked={isCompleted} onClick={onChangeClick} sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }} />
-      <p className={`${classes.task__title} ${isCompleted ? classes.task__completed : ''}`}>{title}</p>
+      <Checkbox
+        checked={isCompleted}
+        onClick={onChangeClick}
+        sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }}
+      />
+      <p
+        className={`${classes.task__title} ${
+          isCompleted ? classes.task__completed : ''
+        }`}
+      >
+        {title}
+      </p>
       <IconButton onClick={onDeleteClick} color="error" aria-label="delete">
         <DeleteIcon />
       </IconButton>

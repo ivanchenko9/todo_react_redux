@@ -18,7 +18,10 @@ interface MyState {
   arrToDisplay: string;
 }
 
-const Settings: React.FunctionComponent<MyProps> = ({ todosAll, setTodosAll }) => {
+const Settings: React.FunctionComponent<MyProps> = ({
+  todosAll,
+  setTodosAll,
+}) => {
   const [arrToDisplay, setArrToDisplay] = React.useState('all');
   const classes = useStyles();
 
@@ -37,7 +40,9 @@ const Settings: React.FunctionComponent<MyProps> = ({ todosAll, setTodosAll }) =
 
   const onClearCompletedClick = () => {
     todosAPI.clearDone();
-    const newArray: ITodos[] = todosAll.filter((todo: ITodos) => todo.isCompleted !== true);
+    const newArray: ITodos[] = todosAll.filter(
+      (todo: ITodos) => todo.isCompleted !== true,
+    );
     setTodosAll(newArray);
   };
 

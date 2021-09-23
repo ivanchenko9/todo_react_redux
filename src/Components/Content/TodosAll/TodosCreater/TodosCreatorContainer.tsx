@@ -1,7 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import TodosCreator from './TodosCreator';
-import { createTaskAC, setTodosAll, setIsConfirmedAll } from '../../../../redux/reducers/todoReducer';
+import {
+  createTaskAC,
+  setTodosAll,
+  setIsConfirmedAll,
+} from '../../../../redux/reducers/todoReducer';
 import { ITodos } from '../../../../redux/types';
 import todosAPI from '../../../../api/api';
 
@@ -19,7 +23,8 @@ const TodosCreatorContainer: React.FunctionComponent<MyProps> = ({
   createTaskAC,
 }) => {
   const [inputValue, setInputValue] = React.useState<string>('');
-  const [isConfirmedAllStatus, setIsConfirmedAllStatus] = React.useState<boolean>(false);
+  const [isConfirmedAllStatus, setIsConfirmedAllStatus] =
+    React.useState<boolean>(false);
 
   const onConfirmAllClick = () => {
     todosAPI.completeAll(!isConfirmedAllStatus);
@@ -73,4 +78,7 @@ const mapDispatchToProps = {
   setIsConfirmedAll,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodosCreatorContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(TodosCreatorContainer);

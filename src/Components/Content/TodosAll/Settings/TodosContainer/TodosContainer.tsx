@@ -11,7 +11,11 @@ interface MyProps {
   arrToDisplay: string;
 }
 
-const TodosContainer: React.FunctionComponent<MyProps> = ({ todosAll, arrToDisplay, setTodosAll }) => {
+const TodosContainer: React.FunctionComponent<MyProps> = ({
+  todosAll,
+  arrToDisplay,
+  setTodosAll,
+}) => {
   const onChangeStatusClick = (todoId: number) => {
     const newArray = todosAll.map((todo: ITodos) => {
       if (todo.id === todoId) {
@@ -48,12 +52,16 @@ const TodosContainer: React.FunctionComponent<MyProps> = ({ todosAll, arrToDispl
   };
 
   const getTodosInProgress = () => {
-    const todosInProgress = todosAll.filter((todo: ITodos) => todo.isCompleted === false);
+    const todosInProgress = todosAll.filter(
+      (todo: ITodos) => todo.isCompleted === false,
+    );
     return todosInProgress;
   };
 
   const getTodosDone = () => {
-    const todosCompleted = todosAll.filter((todo: ITodos) => todo.isCompleted === true);
+    const todosCompleted = todosAll.filter(
+      (todo: ITodos) => todo.isCompleted === true,
+    );
     return todosCompleted;
   };
 
