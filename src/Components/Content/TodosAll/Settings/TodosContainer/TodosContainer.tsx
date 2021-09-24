@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Todo from './Todo/Todo';
+import Todo from './Todo';
 import { setTodosAll } from '../../../../../redux/reducers/todoReducer';
 import { ITodos } from '../../../../../redux/types';
 import todosAPI from '../../../../../api/api';
@@ -36,46 +36,33 @@ const TodosContainer: React.FunctionComponent<MyProps> = ({
     setTodosAll(newArray);
   };
 
-  const displaySelectedArr = (selectedArray: ITodos[]) => {
-    let todosToRender: ITodos[] = selectedArray;
-    todosToRender = todosToRender.map((todo: ITodos) => (
-      <Todo
-        key={todo.id}
-        id={todo.id}
-        title={todo.title}
-        isCompleted={todo.isCompleted}
-        onChangeStatusClick={onChangeStatusClick}
-        onDeleteTodoClick={onDeleteTodoClick}
-      />
-    ));
-    return todosToRender;
-  };
-
-  const getTodosInProgress = () => {
-    const todosInProgress = todosAll.filter(
-      (todo: ITodos) => todo.isCompleted === false,
-    );
-    return todosInProgress;
-  };
-
-  const getTodosDone = () => {
-    const todosCompleted = todosAll.filter(
-      (todo: ITodos) => todo.isCompleted === true,
-    );
-    return todosCompleted;
-  };
-
-  const checkTypeOfArrayToDisplay = () => {
+  const whichArrayShouldDisplay = (): ITodos[] => {
+    let newArr;
     if (arrToDisplay === 'active') {
-      return displaySelectedArr(getTodosInProgress());
+      newArr = todosAll.filter((todo: ITodos) => todo.isCompleted === false);
+      return newArr;
     }
     if (arrToDisplay === 'completed') {
-      return displaySelectedArr(getTodosDone());
+      newArr = todosAll.filter((todo: ITodos) => todo.isCompleted === true);
+      return newArr;
     }
-    return displaySelectedArr(todosAll);
+    return todosAll;
   };
 
-  return <>{checkTypeOfArrayToDisplay()}</>;
+  return (
+    <>
+      {whichArrayShouldDisplay().map((todo: ITodos) => (
+        <Todo
+          key={todo.id}
+          id={todo.id}
+          title={todo.title}
+          isCompleted={todo.isCompleted}
+          onChangeStatusClick={onChangeStatusClick}
+          onDeleteTodoClick={onDeleteTodoClick}
+        />
+      ))}
+    </>
+  );
 };
 
 const mapStateToProps = (state) => ({

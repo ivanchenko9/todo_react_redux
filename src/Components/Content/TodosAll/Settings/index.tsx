@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
 import { connect } from 'react-redux';
 import { setTodosAll } from '../../../../redux/reducers/todoReducer';
 import TodosCreatorContainer from './TodosContainer/TodosContainer';
-import './Settings';
+import '.';
 import { ITodos } from '../../../../redux/types';
 import todosAPI from '../../../../api/api';
 import useStyles from '../../../../styles';
@@ -22,8 +22,22 @@ const Settings: React.FunctionComponent<MyProps> = ({
   todosAll,
   setTodosAll,
 }) => {
-  const [arrToDisplay, setArrToDisplay] = React.useState('all');
+  const [arrToDisplay, setArrToDisplay] = useState<string>('all');
   const classes = useStyles();
+  const todoModes = [
+    {
+      id: 1,
+      mode: 'all',
+    },
+    {
+      id: 2,
+      mode: 'active',
+    },
+    {
+      id: 3,
+      mode: 'completed',
+    },
+  ];
 
   const calcTodoAmount = () => {
     if (todosAll.length) {
@@ -46,16 +60,8 @@ const Settings: React.FunctionComponent<MyProps> = ({
     setTodosAll(newArray);
   };
 
-  const onChengeStatusAll = () => {
-    setArrToDisplay('all');
-  };
-
-  const onChengeStatusActive = () => {
-    setArrToDisplay('active');
-  };
-
-  const onChengeStatusCompleted = () => {
-    setArrToDisplay('completed');
+  const onGetNewArrStatus = (event) => {
+    setArrToDisplay(event.target.value);
   };
 
   return (
@@ -68,9 +74,15 @@ const Settings: React.FunctionComponent<MyProps> = ({
         </p>
         <div className={classes.display__modes}>
           <ButtonGroup variant="text" aria-label="text button group">
-            <Button onClick={onChengeStatusAll}>All</Button>
-            <Button onClick={onChengeStatusActive}>Active</Button>
-            <Button onClick={onChengeStatusCompleted}>Completed</Button>
+            {todoModes.map((newMode) => (
+              <Button
+                key={newMode.id}
+                value={newMode.mode}
+                onClick={onGetNewArrStatus}
+              >
+                {newMode.mode}
+              </Button>
+            ))}
           </ButtonGroup>
         </div>
         <Button variant="contained" onClick={onClearCompletedClick}>

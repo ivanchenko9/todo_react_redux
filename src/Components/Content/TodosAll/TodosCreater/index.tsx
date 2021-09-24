@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import TodosCreator from './TodosCreator';
 import {
@@ -22,9 +22,9 @@ const TodosCreatorContainer: React.FunctionComponent<MyProps> = ({
   setIsConfirmedAll,
   createTaskAC,
 }) => {
-  const [inputValue, setInputValue] = React.useState<string>('');
+  const [inputValue, setInputValue] = useState<string>('');
   const [isConfirmedAllStatus, setIsConfirmedAllStatus] =
-    React.useState<boolean>(false);
+    useState<boolean>(false);
 
   const onConfirmAllClick = () => {
     todosAPI.completeAll(!isConfirmedAllStatus);
