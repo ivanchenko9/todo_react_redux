@@ -1,14 +1,18 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useContext } from 'react';
 import { Button, ButtonGroup } from '@mui/material';
+import { StoreStatusContext, StoreContext } from '../../protoRedux/store';
+// import { connect } from 'react-redux';
 // import { Link } from 'react-router-dom';
-import { setNewRoute } from '../../redux/reducers/routeReducer';
+// import { setNewRoute } from '../../redux/reducers/routeReducer';
+import { setNewRoute } from '../../protoRedux/reducers/routeReducer';
 import useStyles from '../../styles';
 
-interface MyProps {
-  setNewRoute(newLocation: string): void;
-}
-const Nav: React.FunctionComponent<MyProps> = ({ setNewRoute }) => {
+// interface MyProps {
+//   setNewRoute(newLocation: string): void;
+// }
+const Nav: React.FunctionComponent = () => {
+  const { stateStatus, toggleStatus } = useContext(StoreStatusContext);
+  const store = useContext(StoreContext);
   const classes = useStyles();
   const routesButtons = [
     {
@@ -29,7 +33,9 @@ const Nav: React.FunctionComponent<MyProps> = ({ setNewRoute }) => {
   ];
 
   const onChangeRoute = (event) => {
-    setNewRoute(event.target.value);
+    console.log('Expected AC use with next value:', event.target.value);
+    store.dispatch(setNewRoute(event.target.value));
+    toggleStatus();
   };
 
   return (
@@ -53,8 +59,10 @@ const Nav: React.FunctionComponent<MyProps> = ({ setNewRoute }) => {
   );
 };
 
-const mapDispatchToProps = {
-  setNewRoute,
-};
+export default Nav;
 
-export default connect(null, mapDispatchToProps)(Nav);
+// const mapDispatchToProps = {
+//   setNewRoute,
+// };
+
+// export default connect(null, mapDispatchToProps)(Nav);

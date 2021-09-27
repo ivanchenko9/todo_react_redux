@@ -1,20 +1,25 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useContext } from 'react';
+// import { connect } from 'react-redux';
 // import { Link } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import { StoreStatusContext, StoreContext } from '../../../protoRedux/store';
 import useStyles from '../../../styles';
-import { setNewRoute } from '../../../redux/reducers/routeReducer';
+import { setNewRoute } from '../../../protoRedux/reducers/routeReducer';
+// import { setNewRoute } from '../../../redux/reducers/routeReducer';
 
-interface MyProps {
-  setNewRoute(newLocation: string): void;
-}
+// interface MyProps {
+//   setNewRoute(newLocation: string): void;
+// }
 
-const Auth: React.FunctionComponent<MyProps> = ({ setNewRoute }) => {
+const Auth: React.FunctionComponent = () => {
+  const { stateStatus, toggleStatus } = useContext(StoreStatusContext);
+  const store = useContext(StoreContext);
   const classes = useStyles();
   const onCreateAccountClick = (event) => {
-    setNewRoute(event.target.value);
+    store.dispatch(setNewRoute(event.target.value));
+    toggleStatus();
   };
   return (
     <section className={classes.auth_and_reg_container}>
@@ -54,8 +59,10 @@ const Auth: React.FunctionComponent<MyProps> = ({ setNewRoute }) => {
   );
 };
 
-const mapDispatchToProps = {
-  setNewRoute,
-};
+export default Auth;
 
-export default connect(null, mapDispatchToProps)(Auth);
+// const mapDispatchToProps = {
+//   setNewRoute,
+// };
+
+// export default connect(null, mapDispatchToProps)(Auth);

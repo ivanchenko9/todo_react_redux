@@ -1,30 +1,37 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useContext } from 'react';
+// import { connect } from 'react-redux';
 import TodosCreator from './TodosCreator';
+// import {
+//   createTaskAC,
+//   setTodosAll,
+//   setIsConfirmedAll,
+// } from '../../../../redux/reducers/todoReducer';
 import {
   createTaskAC,
   setTodosAll,
   setIsConfirmedAll,
-} from '../../../../redux/reducers/todoReducer';
-import { ITodos } from '../../../../redux/types';
+} from '../../../../protoRedux/reducers/todoReducer';
+import { ITodos } from '../../../../protoRedux/types';
 import todosAPI from '../../../../api/api';
+import { StoreStatusContext, StoreContext } from '../../../../protoRedux/store';
 
-interface MyProps {
-  todosAll: ITodos[];
-  setTodosAll(newArray: ITodos[]): void;
-  setIsConfirmedAll(isConfirmedAll: boolean): void;
-  createTaskAC(newTask: String): void;
-}
+// interface MyProps {
+//   todosAll: ITodos[];
+//   setTodosAll(newArray: ITodos[]): void;
+//   setIsConfirmedAll(isConfirmedAll: boolean): void;
+//   createTaskAC(newTask: String): void;
+// }
 
-const TodosCreatorContainer: React.FunctionComponent<MyProps> = ({
-  todosAll,
-  setTodosAll,
-  setIsConfirmedAll,
-  createTaskAC,
-}) => {
+const TodosCreatorContainer: React.FunctionComponent = () => {
+  const { stateStatus, toggleStatus } = useContext(StoreStatusContext);
+  const store = useContext(StoreContext);
+
   const [inputValue, setInputValue] = useState<string>('');
   const [isConfirmedAllStatus, setIsConfirmedAllStatus] =
     useState<boolean>(false);
+
+  // const todosAll = store.getState().todosData.todosAll;
+  const todosAll = store.getState().todoReducer.todosAll;
 
   const onConfirmAllClick = () => {
     todosAPI.completeAll(!isConfirmedAllStatus);
@@ -41,19 +48,22 @@ const TodosCreatorContainer: React.FunctionComponent<MyProps> = ({
       }));
     }
     setIsConfirmedAllStatus(!isConfirmedAllStatus);
-    setTodosAll(newArray);
-    setIsConfirmedAll(isConfirmedAllStatus);
+    store.dispatch(setTodosAll(newArray));
+    store.dispatch(setIsConfirmedAll(isConfirmedAllStatus));
+    toggleStatus();
   };
 
   const onChangeInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(event.target.value);
+    toggleStatus();
   };
 
   const onAddTaskClick = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
       if (inputValue !== '') {
-        createTaskAC(inputValue);
+        store.dispatch(createTaskAC(inputValue));
         setInputValue('');
+        toggleStatus();
       }
     }
   };
@@ -68,17 +78,19 @@ const TodosCreatorContainer: React.FunctionComponent<MyProps> = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  todosAll: state.todoReducer.todosAll,
-});
+export default TodosCreatorContainer;
 
-const mapDispatchToProps = {
-  createTaskAC,
-  setTodosAll,
-  setIsConfirmedAll,
-};
+// const mapStateToProps = (state) => ({
+//   todosAll: state.todoReducer.todosAll,
+// });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(TodosCreatorContainer);
+// const mapDispatchToProps = {
+//   createTaskAC,
+//   setTodosAll,
+//   setIsConfirmedAll,
+// };
+
+// export default connect(
+//   mapStateToProps,
+//   mapDispatchToProps,
+// )(TodosCreatorContainer);

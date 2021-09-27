@@ -20,6 +20,13 @@
     "no-shadow": "off",
     "object-curly-newline": "off",
     "operator-linebreak": "off",
-    "no-nested-ternary": "off"
+    "no-nested-ternary": "off",
+    "no-underscore-dangle": "off",
+    "no-unneeded-ternary": "off",
+    "no-unused-expressions": "off",
+    "prefer-destructuring": "off",
+    "guard-for-in": "off",
+    "no-restricted-syntax": "off",
+    "no-prototype-builtins": "off"
   }
 }

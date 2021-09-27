@@ -1,13 +1,14 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useContext } from 'react';
+// import { connect } from 'react-redux';
 // import { Route } from 'react-router-dom';
 import Registration from './Registration';
 import Auth from './Auth';
 import TodosAll from './TodosAll';
+import { StoreContext } from '../../protoRedux/store';
 
-interface MyProps {
-  location: string;
-}
+// interface MyProps {
+//   location: string;
+// }
 
 // const Content: React.FunctionComponent = () => (
 //   <main>
@@ -22,20 +23,37 @@ interface MyProps {
 //     </Route>
 //   </main>
 // );
-const Content: React.FunctionComponent<MyProps> = ({ location }) => (
-  <main>
-    {location === '/registration' ? (
-      <Registration />
-    ) : location === '/auth' ? (
-      <Auth />
-    ) : location === '/todos' ? (
-      <TodosAll />
-    ) : null}
-  </main>
-);
+const Content: React.FunctionComponent = () => {
+  const store = useContext(StoreContext);
+  console.log('New location is: ', store.getState().routeReducer.location);
+  return (
+    <main>
+      {store.getState().routeReducer.location === '/registration' ? (
+        <Registration />
+      ) : store.getState().routeReducer.location === '/auth' ? (
+        <Auth />
+      ) : store.getState().routeReducer.location === '/todos' ? (
+        <TodosAll />
+      ) : null}
+    </main>
+  );
+  // return (
+  //   <main>
+  //     {store.getState().routeData.location === '/registration' ? (
+  //       <Registration />
+  //     ) : store.getState().routeData.location === '/auth' ? (
+  //       <Auth />
+  //     ) : store.getState().routeData.location === '/todos' ? (
+  //       <TodosAll />
+  //     ) : null}
+  //   </main>
+  // );
+};
 
-const mapStateToProps = (state) => ({
-  location: state.routeReducer.location,
-});
+export default Content;
 
-export default connect(mapStateToProps, null)(Content);
+// const mapStateToProps = (state) => ({
+//   location: state.routeReducer.location,
+// });
+
+// export default connect(mapStateToProps, null)(Content);
