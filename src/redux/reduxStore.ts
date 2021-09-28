@@ -2,7 +2,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga';
 import todoReducer from './reducers/todoReducer';
-import fetchTodosWatcher from '../saga/todosSaga';
+import rootWatcher from '../saga/index';
 
 const sagaMiddleware = createSagaMiddleware();
 const reducers = combineReducers({
@@ -11,7 +11,7 @@ const reducers = combineReducers({
 
 const store = createStore(reducers, applyMiddleware(sagaMiddleware));
 
-sagaMiddleware.run(fetchTodosWatcher);
+sagaMiddleware.run(rootWatcher);
 // const store = createStore(reducers, applyMiddleware(thunk));
 
 export default store;

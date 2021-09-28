@@ -1,5 +1,6 @@
 import * as axios from 'axios';
-// бавить типизацию массивам тудушек
+import { ITodos } from '../redux/types';
+
 interface ToUpdate {
   id: number;
   isCompleted: boolean;
@@ -18,19 +19,19 @@ const instance = axios.create({
 });
 
 const todosAPI = {
-  addTodo(rawTodo: any) {
+  addTodo(rawTodo: ITodos) {
     try {
-      const stringifyTodo: any = JSON.stringify(rawTodo);
+      const stringifyTodo = JSON.stringify(rawTodo);
       return instance
         .post('/todos', stringifyTodo)
-        .then((response: any) => console.log(response.data));
+        .then((response) => console.log(response.data));
     } catch (error) {
       console.error(error);
     }
   },
   updateTodo(selectedId: number, selectedArr: any[]) {
     let newTodoStatus: boolean;
-    selectedArr.forEach((todo: any) => {
+    selectedArr.forEach((todo: ITodos) => {
       if (todo.id === selectedId) {
         newTodoStatus = !todo.isCompleted;
       }
@@ -40,10 +41,10 @@ const todosAPI = {
         id: selectedId,
         isCompleted: newTodoStatus,
       };
-      const parsedQuerySetting: any = JSON.stringify(rawQuerySetting);
+      const parsedQuerySetting = JSON.stringify(rawQuerySetting);
       return instance
         .post('/todos/update', parsedQuerySetting)
-        .then((response: any) => console.log(response.data));
+        .then((response) => console.log(response.data));
     } catch (error) {
       console.error(error);
     }
