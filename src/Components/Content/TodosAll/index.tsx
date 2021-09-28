@@ -1,16 +1,13 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import TodosCreatorContainer from './TodosCreater';
 import Settings from './Settings';
 import fetchTodos from '../../../redux/asyncActions/todoAsync';
 
-type MyProps = {
-  fetchTodos(): void;
-};
-
-const TodosAll: React.FunctionComponent<MyProps> = ({ fetchTodos }) => {
+const TodosAll: React.FunctionComponent = () => {
+  const dispatch = useDispatch();
   useEffect(() => {
-    fetchTodos();
+    dispatch(fetchTodos());
   }, []);
 
   return (
@@ -21,8 +18,4 @@ const TodosAll: React.FunctionComponent<MyProps> = ({ fetchTodos }) => {
   );
 };
 
-const mapDispatchToProps = {
-  fetchTodos,
-};
-
-export default connect(null, mapDispatchToProps)(TodosAll);
+export default TodosAll;

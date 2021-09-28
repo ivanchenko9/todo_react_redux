@@ -1,21 +1,16 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Todo from './Todo';
 import { setTodosAll } from '../../../../../redux/reducers/todoReducer';
 import { ITodos } from '../../../../../redux/types';
 import todosAPI from '../../../../../api/api';
 
 interface MyProps {
-  todosAll: ITodos[];
-  setTodosAll(newArray: ITodos[]): void;
   arrToDisplay: string;
 }
-
-const TodosContainer: React.FunctionComponent<MyProps> = ({
-  todosAll,
-  setTodosAll,
-  arrToDisplay,
-}) => {
+const TodosContainer: React.FunctionComponent<MyProps> = ({ arrToDisplay }) => {
+  const todosAll = useSelector((state) => state.todoReducer.todosAll);
+  const dispatch = useDispatch();
   const onChangeStatusClick = (todoId: number) => {
     const newArray = todosAll.map((todo: ITodos) => {
       if (todo.id === todoId) {
@@ -27,13 +22,13 @@ const TodosContainer: React.FunctionComponent<MyProps> = ({
       }
       return { ...todo };
     });
-    setTodosAll(newArray);
+    dispatch(setTodosAll(newArray));
   };
 
   const onDeleteTodoClick = (todoId: number) => {
     todosAPI.deleteTodo(todoId);
     const newArray = todosAll.filter((todo: ITodos) => todo.id !== todoId);
-    setTodosAll(newArray);
+    dispatch(setTodosAll(newArray));
   };
 
   const whichArrayShouldDisplay = (): ITodos[] => {
@@ -65,12 +60,4 @@ const TodosContainer: React.FunctionComponent<MyProps> = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  todosAll: state.todoReducer.todosAll,
-});
-
-const mapDispatchToProps = {
-  setTodosAll,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(TodosContainer);
+export default TodosContainer;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import TodosCreator from './TodosCreator';
 import {
   createTaskAC,
@@ -9,19 +9,10 @@ import {
 import { ITodos } from '../../../../redux/types';
 import todosAPI from '../../../../api/api';
 
-interface MyProps {
-  todosAll: ITodos[];
-  setTodosAll(newArray: ITodos[]): void;
-  setIsConfirmedAll(isConfirmedAll: boolean): void;
-  createTaskAC(newTask: String): void;
-}
+const TodosCreatorContainer: React.FunctionComponent = () => {
+  const todosAll = useSelector((state) => state.todoReducer.todosAll);
+  const dispatch = useDispatch();
 
-const TodosCreatorContainer: React.FunctionComponent<MyProps> = ({
-  todosAll,
-  setTodosAll,
-  setIsConfirmedAll,
-  createTaskAC,
-}) => {
   const [inputValue, setInputValue] = useState<string>('');
   const [isConfirmedAllStatus, setIsConfirmedAllStatus] =
     useState<boolean>(false);
@@ -41,8 +32,8 @@ const TodosCreatorContainer: React.FunctionComponent<MyProps> = ({
       }));
     }
     setIsConfirmedAllStatus(!isConfirmedAllStatus);
-    setTodosAll(newArray);
-    setIsConfirmedAll(isConfirmedAllStatus);
+    dispatch(setTodosAll(newArray));
+    dispatch(setIsConfirmedAll(isConfirmedAllStatus));
   };
 
   const onChangeInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -52,7 +43,7 @@ const TodosCreatorContainer: React.FunctionComponent<MyProps> = ({
   const onAddTaskClick = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
       if (inputValue !== '') {
-        createTaskAC(inputValue);
+        dispatch(createTaskAC(inputValue));
         setInputValue('');
       }
     }
@@ -68,17 +59,4 @@ const TodosCreatorContainer: React.FunctionComponent<MyProps> = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  todosAll: state.todoReducer.todosAll,
-});
-
-const mapDispatchToProps = {
-  createTaskAC,
-  setTodosAll,
-  setIsConfirmedAll,
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(TodosCreatorContainer);
+export default TodosCreatorContainer;

@@ -1,22 +1,16 @@
 import React, { useState } from 'react';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setTodosAll } from '../../../../redux/reducers/todoReducer';
 import TodosCreatorContainer from './TodosContainer/TodosContainer';
 import { ITodos } from '../../../../redux/types';
 import todosAPI from '../../../../api/api';
 import useStyles from '../../../../styles';
 
-interface MyProps {
-  todosAll: ITodos[];
-  setTodosAll(newArray: ITodos[]): void;
-}
-
-const Settings: React.FunctionComponent<MyProps> = ({
-  todosAll,
-  setTodosAll,
-}) => {
+const Settings: React.FunctionComponent = () => {
+  const todosAll = useSelector((state) => state.todoReducer.todosAll);
+  const dispatch = useDispatch();
   const [arrToDisplay, setArrToDisplay] = useState<string>('all');
   const classes = useStyles();
   const todoModes = [
@@ -52,7 +46,7 @@ const Settings: React.FunctionComponent<MyProps> = ({
     const newArray: ITodos[] = todosAll.filter(
       (todo: ITodos) => todo.isCompleted !== true,
     );
-    setTodosAll(newArray);
+    dispatch(setTodosAll(newArray));
   };
 
   const onGetNewArrStatus = (event) => {
@@ -88,12 +82,4 @@ const Settings: React.FunctionComponent<MyProps> = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  todosAll: state.todoReducer.todosAll,
-});
-
-const mapDispatchToProps = {
-  setTodosAll,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Settings);
+export default Settings;
