@@ -1,10 +1,11 @@
 import todosAPI from '../../api/api';
 import { ITodos } from '../types';
 
-enum TodoActionTypes {
+export enum TodoActionTypes {
   SET_TODOS = 'SET_TODOS',
   CHANGE_IS_CONFIRMED_ALL_STATUS = 'CHANGE_IS_CONFIRMED_ALL_STATUS',
   CREATE_TASK = 'CREATE_TASK',
+  ASYNC_GET_TODOS = ' ASYNC_GET_TODOS',
 }
 
 interface TodoState {
@@ -27,10 +28,15 @@ interface CreateTaskAction {
   payload: string;
 }
 
+interface AsyncGetTodosAction {
+  type: TodoActionTypes.ASYNC_GET_TODOS;
+}
+
 type TodoAction =
   | SetTodosAction
   | ChangeIsConfirmedAllAction
-  | CreateTaskAction;
+  | CreateTaskAction
+  | AsyncGetTodosAction;
 
 const initilState: TodoState = {
   todosAll: [],
@@ -79,6 +85,9 @@ export const setIsConfirmedAll = (isConfirmedAll: boolean) => ({
 export const setTodosAll = (newArray: ITodos[]) => ({
   type: TodoActionTypes.SET_TODOS,
   payload: newArray,
+});
+export const AsyncGetTodos = () => ({
+  type: TodoActionTypes.ASYNC_GET_TODOS,
 });
 
 export default todoReducer;

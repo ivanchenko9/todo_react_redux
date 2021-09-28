@@ -1,5 +1,5 @@
 import * as axios from 'axios';
-
+// бавить типизацию массивам тудушек
 interface ToUpdate {
   id: number;
   isCompleted: boolean;
@@ -82,6 +82,9 @@ const todosAPI = {
     } catch (error) {
       console.error(error);
     }
+  },
+  fetchTodos() {
+    return instance.get().then((response: any) => response.data);
   },
 };
 

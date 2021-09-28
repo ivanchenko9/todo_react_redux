@@ -2,12 +2,16 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import TodosCreatorContainer from './TodosCreater';
 import Settings from './Settings';
-import fetchTodos from '../../../redux/asyncActions/todoAsync';
+import { AsyncGetTodos } from '../../../redux/reducers/todoReducer';
+// import fetchTodos from '../../../redux/asyncActions/todoAsync';
 
 const TodosAll: React.FunctionComponent = () => {
   const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(fetchTodos());
+  // }, []);
   useEffect(() => {
-    dispatch(fetchTodos());
+    dispatch(AsyncGetTodos());
   }, []);
 
   return (
