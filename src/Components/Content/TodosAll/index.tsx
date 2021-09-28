@@ -1,32 +1,16 @@
-import React, { useEffect, useContext } from 'react';
-import { StoreStatusContext, StoreContext } from '../../../protoRedux/store';
-// import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import TodosCreatorContainer from './TodosCreater';
 import Settings from './Settings';
-import todosAPI from '../../../api/api';
-import { setTodosAll } from '../../../protoRedux/reducers/todoReducer';
-// import fetchTodos from '../../../redux/asyncActions/todoAsync';
+import fetchTodos from '../../../redux/asyncActions/todoAsync';
 
-// type MyProps = {
-//   fetchTodos(): void;
-// };
+type MyProps = {
+  fetchTodos(): void;
+};
 
-const TodosAll: React.FunctionComponent = () => {
-  const { stateStatus, toggleStatus } = useContext(StoreStatusContext);
-  const store = useContext(StoreContext);
-
-  async function asyncGetTodos() {
-    const rawTodosData = await todosAPI.fetchTodo();
-    const parsedTodosData = JSON.parse(rawTodosData);
-    store.dispatch(setTodosAll(parsedTodosData));
-  }
-
-  // useEffect(() => {
-  //   fetchTodos();
-  // }, []);
+const TodosAll: React.FunctionComponent<MyProps> = ({ fetchTodos }) => {
   useEffect(() => {
-    asyncGetTodos;
-    toggleStatus();
+    fetchTodos();
   }, []);
 
   return (
@@ -37,10 +21,8 @@ const TodosAll: React.FunctionComponent = () => {
   );
 };
 
-export default TodosAll;
+const mapDispatchToProps = {
+  fetchTodos,
+};
 
-// const mapDispatchToProps = {
-//   fetchTodos,
-// };
-
-// export default connect(null, mapDispatchToProps)(TodosAll);
+export default connect(null, mapDispatchToProps)(TodosAll);

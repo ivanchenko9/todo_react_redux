@@ -1,31 +1,22 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
-// import { connect } from 'react-redux';
-// import { setTodosAll } from '../../../../redux/reducers/todoReducer';
+import { connect } from 'react-redux';
+import { setTodosAll } from '../../../../redux/reducers/todoReducer';
 import TodosCreatorContainer from './TodosContainer/TodosContainer';
-// import { ITodos } from '../../../../redux/types';
-import { ITodos } from '../../../../protoRedux/types';
+import { ITodos } from '../../../../redux/types';
 import todosAPI from '../../../../api/api';
 import useStyles from '../../../../styles';
-import { StoreStatusContext, StoreContext } from '../../../../protoRedux/store';
-import { setTodosAll } from '../../../../protoRedux/reducers/todoReducer';
 
-// interface MyProps {
-//   todosAll: ITodos[];
-//   setTodosAll(newArray: ITodos[]): void;
-// }
+interface MyProps {
+  todosAll: ITodos[];
+  setTodosAll(newArray: ITodos[]): void;
+}
 
-// interface MyState {
-//   arrToDisplay: string;
-// }
-
-const Settings: React.FunctionComponent = () => {
-  const { stateStatus, toggleStatus } = useContext(StoreStatusContext);
-  const store = useContext(StoreContext);
-  // const todosAll = store.getState().todosData.todosAll;
-  const todosAll = store.getState().todoReducer.todosAll;
-
+const Settings: React.FunctionComponent<MyProps> = ({
+  todosAll,
+  setTodosAll,
+}) => {
   const [arrToDisplay, setArrToDisplay] = useState<string>('all');
   const classes = useStyles();
   const todoModes = [
@@ -61,13 +52,11 @@ const Settings: React.FunctionComponent = () => {
     const newArray: ITodos[] = todosAll.filter(
       (todo: ITodos) => todo.isCompleted !== true,
     );
-    store.dispatch(setTodosAll(newArray));
-    toggleStatus();
+    setTodosAll(newArray);
   };
 
   const onGetNewArrStatus = (event) => {
     setArrToDisplay(event.target.value);
-    toggleStatus();
   };
 
   return (
@@ -99,14 +88,12 @@ const Settings: React.FunctionComponent = () => {
   );
 };
 
-export default Settings;
+const mapStateToProps = (state) => ({
+  todosAll: state.todoReducer.todosAll,
+});
 
-// const mapStateToProps = (state) => ({
-//   todosAll: state.todoReducer.todosAll,
-// });
+const mapDispatchToProps = {
+  setTodosAll,
+};
 
-// const mapDispatchToProps = {
-//   setTodosAll,
-// };
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Settings);
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

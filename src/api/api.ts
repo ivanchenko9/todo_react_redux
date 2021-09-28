@@ -83,13 +83,6 @@ const todosAPI = {
       console.error(error);
     }
   },
-  fetchTodo() {
-    try {
-      return instance.get().then((response: any) => response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  },
 };
 
 export default todosAPI;
