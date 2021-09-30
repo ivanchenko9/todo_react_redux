@@ -19,17 +19,16 @@ const instance = axios.create({
 });
 
 const todosAPI = {
-  addTodo(rawTodo: ITodos) {
+  addTodo(body: ITodos) {
     try {
-      const stringifyTodo = JSON.stringify(rawTodo);
       return instance
-        .post('/todos', stringifyTodo)
+        .post('/todos', body)
         .then((response) => console.log(response.data));
     } catch (error) {
       console.error(error);
     }
   },
-  updateTodo(selectedId: number, selectedArr: any[]) {
+  updateTodo(selectedId: number, selectedArr: ITodos[]) {
     let newTodoStatus: boolean;
     selectedArr.forEach((todo: ITodos) => {
       if (todo.id === selectedId) {
@@ -37,13 +36,12 @@ const todosAPI = {
       }
     });
     try {
-      const rawQuerySetting: ToUpdate = {
+      const body: ToUpdate = {
         id: selectedId,
         isCompleted: newTodoStatus,
       };
-      const parsedQuerySetting = JSON.stringify(rawQuerySetting);
       return instance
-        .post('/todos/update', parsedQuerySetting)
+        .patch('/todos/update', body)
         .then((response) => console.log(response.data));
     } catch (error) {
       console.error(error);
@@ -51,12 +49,8 @@ const todosAPI = {
   },
   deleteTodo(selectedId: number) {
     try {
-      const rawQuerySetting: ToDelete = {
-        id: selectedId,
-      };
-      const parsedQuerySetting: any = JSON.stringify(rawQuerySetting);
       return instance
-        .post('/todos/delete', parsedQuerySetting)
+        .delete(`/todos/delete?id=${selectedId}`)
         .then((response: any) => console.log(response.data));
     } catch (error) {
       console.error(error);
@@ -65,27 +59,26 @@ const todosAPI = {
   clearDone() {
     try {
       return instance
-        .post('/todos/cleardone')
+        .delete('/todos/cleardone')
         .then((response: any) => console.log(response.data));
     } catch (error) {
       console.error(error);
     }
   },
   completeAll(isCompletedAllStatus: boolean) {
-    const rawQuerySetting: ToCompleteAll = {
+    const body: ToCompleteAll = {
       isCompletedAll: isCompletedAllStatus,
     };
-    const parsedQuerySetting: any = JSON.stringify(rawQuerySetting);
     try {
       return instance
-        .post('/todos/completeall', parsedQuerySetting)
+        .patch('/todos/completeall', body)
         .then((response: any) => console.log(response.data));
     } catch (error) {
       console.error(error);
     }
   },
   fetchTodos() {
-    return instance.get().then((response: any) => response.data);
+    return instance.get('/todos').then((response: any) => response.data);
   },
 };
 
