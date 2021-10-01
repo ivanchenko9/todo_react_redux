@@ -27,6 +27,9 @@
     "prefer-destructuring": "off",
     "guard-for-in": "off",
     "no-restricted-syntax": "off",
-    "no-prototype-builtins": "off"
+    "no-prototype-builtins": "off",
+    "dot-notation": "off",
+    "no-restricted-globals": "off",
+    "camelcase": "off"
   }
 }

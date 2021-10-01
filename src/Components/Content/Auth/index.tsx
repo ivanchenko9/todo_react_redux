@@ -1,12 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import useStyles from '../../../styles';
+import todosAPI from '../../../api/api';
+import { setCurrentUser } from '../../../redux/reducers/authReducer';
 
 const Auth: React.FunctionComponent = () => {
   const classes = useStyles();
+  const authReducer = useSelector((state) => state.authReducer);
+  const dispatch = useDispatch();
+
+  const [login, setLogin] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+
+  const onLoginInputChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
+    setLogin(event.target.value);
+  };
+
+  const onPasswordInputChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
+    setPassword(event.target.value);
+  };
+
+  const onSubmitClick = async () => {
+    const user = { login, password };
+    const decoded = await todosAPI.login(user);
+    dispatch(setCurrentUser(decoded));
+    setLogin('');
+    setPassword('');
+  };
+
   return (
     <section className={classes.auth_and_reg_container}>
       <h2 className={classes.auth__and__reg__title}>Authentication</h2>
@@ -17,6 +46,8 @@ const Auth: React.FunctionComponent = () => {
             label="Your login"
             variant="standard"
             fullWidth
+            onChange={onLoginInputChange}
+            value={login}
           />
         </div>
         <div className={classes.auth__and_reg__input}>
@@ -25,10 +56,12 @@ const Auth: React.FunctionComponent = () => {
             label="Your password"
             variant="standard"
             fullWidth
+            onChange={onPasswordInputChange}
+            value={password}
           />
         </div>
         <div className={classes.auth__and_reg__button}>
-          <Button fullWidth variant="contained">
+          <Button fullWidth variant="contained" onClick={onSubmitClick}>
             Log in
           </Button>
         </div>
