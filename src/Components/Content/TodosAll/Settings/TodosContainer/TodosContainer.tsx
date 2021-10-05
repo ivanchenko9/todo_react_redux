@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Todo from './Todo';
-import { setTodosAll } from '../../../../../redux/reducers/todoReducer';
+import { setTodosAC } from '../../../../../redux/reducers/todoReducer';
 import { ITodos } from '../../../../../redux/types';
 import todosAPI from '../../../../../api/api';
 
@@ -22,13 +22,13 @@ const TodosContainer: React.FunctionComponent<MyProps> = ({ arrToDisplay }) => {
       }
       return { ...todo };
     });
-    dispatch(setTodosAll(newArray));
+    dispatch(setTodosAC(newArray));
   };
 
   const onDeleteTodoClick = (todoId: number) => {
     todosAPI.deleteTodo(todoId);
     const newArray = todosAll.filter((todo: ITodos) => todo.id !== todoId);
-    dispatch(setTodosAll(newArray));
+    dispatch(setTodosAC(newArray));
   };
 
   const whichArrayShouldDisplay = (): ITodos[] => {

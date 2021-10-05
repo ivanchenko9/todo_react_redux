@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import useStyles from '../../../styles';
-import todosAPI from '../../../api/api';
+import { registrationAC } from '../../../redux/reducers/authReducer';
 
 const Registration: React.FunctionComponent = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [login, setLogin] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
@@ -25,7 +27,7 @@ const Registration: React.FunctionComponent = () => {
 
   const onSubmitClick = () => {
     const user = { login, password };
-    todosAPI.registration(user);
+    dispatch(registrationAC(user));
     setLogin('');
     setPassword('');
   };

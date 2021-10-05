@@ -1,5 +1,5 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import todoReducer from './reducers/todoReducer';
 import authReducer from './reducers/authReducer';
@@ -11,7 +11,7 @@ const reducers = combineReducers({
   authReducer,
 });
 
-const store = createStore(reducers, applyMiddleware(sagaMiddleware));
+const store = createStore(reducers, applyMiddleware(logger, sagaMiddleware));
 
 sagaMiddleware.run(rootWatcher);
 // const store = createStore(reducers, applyMiddleware(thunk));

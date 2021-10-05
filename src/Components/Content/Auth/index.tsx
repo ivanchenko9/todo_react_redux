@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import useStyles from '../../../styles';
-import todosAPI from '../../../api/api';
-import { setCurrentUser } from '../../../redux/reducers/authReducer';
+import { setCurrentUserAC } from '../../../redux/reducers/authReducer';
 
 const Auth: React.FunctionComponent = () => {
   const classes = useStyles();
-  const authReducer = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
 
   const [login, setLogin] = useState<string>('');
@@ -30,8 +28,7 @@ const Auth: React.FunctionComponent = () => {
 
   const onSubmitClick = async () => {
     const user = { login, password };
-    const decoded = await todosAPI.login(user);
-    dispatch(setCurrentUser(decoded));
+    dispatch(setCurrentUserAC(user));
     setLogin('');
     setPassword('');
   };

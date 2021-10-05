@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTodosAll } from '../../../../redux/reducers/todoReducer';
+import { setTodosAC } from '../../../../redux/reducers/todoReducer';
 import TodosCreatorContainer from './TodosContainer/TodosContainer';
 import { ITodos } from '../../../../redux/types';
 import todosAPI from '../../../../api/api';
@@ -46,7 +46,7 @@ const Settings: React.FunctionComponent = () => {
     const newArray: ITodos[] = todosAll.filter(
       (todo: ITodos) => todo.isCompleted !== true,
     );
-    dispatch(setTodosAll(newArray));
+    dispatch(setTodosAC(newArray));
   };
 
   const onGetNewArrStatus = (event) => {

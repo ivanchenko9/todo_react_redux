@@ -1,42 +1,11 @@
-import todosAPI from '../../api/api';
-import { ITodos } from '../types';
-
-export enum TodoActionTypes {
-  SET_TODOS = 'SET_TODOS',
-  CHANGE_IS_CONFIRMED_ALL_STATUS = 'CHANGE_IS_CONFIRMED_ALL_STATUS',
-  CREATE_TASK = 'CREATE_TASK',
-  ASYNC_GET_TODOS = ' ASYNC_GET_TODOS',
-}
-
-interface TodoState {
-  todosAll: ITodos[];
-  isConfirmedAll: boolean;
-}
-
-interface SetTodosAction {
-  type: TodoActionTypes.SET_TODOS;
-  payload: ITodos[];
-}
-
-interface ChangeIsConfirmedAllAction {
-  type: TodoActionTypes.CHANGE_IS_CONFIRMED_ALL_STATUS;
-  payload: boolean;
-}
-
-interface CreateTaskAction {
-  type: TodoActionTypes.CREATE_TASK;
-  payload: string;
-}
-
-interface AsyncGetTodosAction {
-  type: TodoActionTypes.ASYNC_GET_TODOS;
-}
-
-type TodoAction =
-  | SetTodosAction
-  | ChangeIsConfirmedAllAction
-  | CreateTaskAction
-  | AsyncGetTodosAction;
+import { ITodos, TodoState, TodoAction } from '../types';
+import {
+  getTodos,
+  createTask,
+  setTodos,
+  changeIsConfirmedAllStatus,
+  logout,
+} from '../actions';
 
 const initilState: TodoState = {
   todosAll: [],
@@ -45,28 +14,23 @@ const initilState: TodoState = {
 
 const todoReducer = (state = initilState, action: TodoAction): TodoState => {
   switch (action.type) {
-    case TodoActionTypes.CHANGE_IS_CONFIRMED_ALL_STATUS: {
-      return {
-        ...state,
-        isConfirmedAll: action.payload,
-      };
-    }
-    case TodoActionTypes.SET_TODOS: {
+    case getTodos.SUCCESS || createTask.SUCCESS || setTodos.SUCCESS: {
       return {
         ...state,
         todosAll: action.payload,
       };
     }
-    case TodoActionTypes.CREATE_TASK: {
-      const newTask: ITodos = {
-        id: Date.now(),
-        isCompleted: false,
-        title: action.payload,
-      };
-      todosAPI.addTodo(newTask);
+    case changeIsConfirmedAllStatus.SUCCESS: {
       return {
         ...state,
-        todosAll: [...state.todosAll, newTask],
+        isConfirmedAll: !state.isConfirmedAll,
+        todosAll: action.payload,
+      };
+    }
+    case logout.SUCCESS: {
+      return {
+        ...state,
+        todosAll: [],
       };
     }
     default:
@@ -74,20 +38,20 @@ const todoReducer = (state = initilState, action: TodoAction): TodoState => {
   }
 };
 
+export const getTodosAC = () => ({
+  type: getTodos.REQUEST,
+});
 export const createTaskAC = (taskText: string) => ({
-  type: TodoActionTypes.CREATE_TASK,
+  type: createTask.REQUEST,
   payload: taskText,
 });
-export const setIsConfirmedAll = (isConfirmedAll: boolean) => ({
-  type: TodoActionTypes.CHANGE_IS_CONFIRMED_ALL_STATUS,
+export const changeIsConfirmedAllStatusAC = (isConfirmedAll: boolean) => ({
+  type: changeIsConfirmedAllStatus.REQUEST,
   payload: isConfirmedAll,
 });
-export const setTodosAll = (newArray: ITodos[]) => ({
-  type: TodoActionTypes.SET_TODOS,
+export const setTodosAC = (newArray: ITodos[]) => ({
+  type: setTodos.REQUEST,
   payload: newArray,
-});
-export const AsyncGetTodos = () => ({
-  type: TodoActionTypes.ASYNC_GET_TODOS,
 });
 
 export default todoReducer;

@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import TodosCreator from './TodosCreator';
 import {
   createTaskAC,
-  setTodosAll,
-  setIsConfirmedAll,
+  setTodosAC,
+  changeIsConfirmedAllStatusAC,
 } from '../../../../redux/reducers/todoReducer';
 import { ITodos } from '../../../../redux/types';
 import todosAPI from '../../../../api/api';
@@ -32,8 +32,8 @@ const TodosCreatorContainer: React.FunctionComponent = () => {
       }));
     }
     setIsConfirmedAllStatus(!isConfirmedAllStatus);
-    dispatch(setTodosAll(newArray));
-    dispatch(setIsConfirmedAll(isConfirmedAllStatus));
+    dispatch(setTodosAC(newArray));
+    dispatch(changeIsConfirmedAllStatusAC(isConfirmedAllStatus));
   };
 
   const onChangeInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {

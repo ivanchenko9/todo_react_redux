@@ -4,8 +4,7 @@ import { Button, ButtonGroup } from '@mui/material';
 import { Link } from 'react-router-dom';
 import useStyles from '../../styles';
 import todosAPI from '../../api/api';
-import { setCurrentUser } from '../../redux/reducers/authReducer';
-import { setTodosAll } from '../../redux/reducers/todoReducer'
+import { logoutAC } from '../../redux/reducers/authReducer';
 
 const Nav: React.FunctionComponent = () => {
   const classes = useStyles();
@@ -16,8 +15,7 @@ const Nav: React.FunctionComponent = () => {
   const dispatch = useDispatch();
   const onLogoutClick = () => {
     todosAPI.logout();
-    dispatch(setCurrentUser({}));
-    dispatch(setTodosAll([]))
+    dispatch(logoutAC());
   };
 
   if (isAuthenticated) {
