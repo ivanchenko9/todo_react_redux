@@ -7,24 +7,28 @@ interface ToUpdate {
   isCompleted: boolean;
 }
 
-interface ToDelete {
-  id: number;
-}
-
 interface ToCompleteAll {
   isCompletedAll: boolean;
 }
 
-const instance = axios.create({
+let instance = axios.create({
   baseURL: 'http://localhost:3000',
 });
 
 export const setAuthToken = (token) => {
   if (token) {
-    console.log('Token got from server: ', token);
-    axios.defaults.headers.common['Authorization'] = token;
+    instance = axios.create({
+      baseURL: 'http://localhost:3000',
+      headers: {
+        Authorization: token,
+      },
+    });
+    console.log('Invoke setAuthToken and it`s true: ', instance);
   } else {
-    delete axios.defaults.headers.common['Authorization'];
+    instance = axios.create({
+      baseURL: 'http://localhost:3000',
+    });
+    console.log('Invoke setAuthToken and it`s false: ', instance);
   }
 };
 
@@ -88,6 +92,7 @@ const todosAPI = {
     }
   },
   fetchTodos() {
+    console.log('Instance in fetchTodos: ', instance);
     return instance.get('/todos').then((response: any) => response.data);
   },
   registration(userData) {
@@ -106,7 +111,6 @@ const todosAPI = {
         localStorage.setItem('access_token', token);
         setAuthToken(token);
         const decoded = jwtDecode(token);
-        console.log('Authed user: ', decoded);
         return decoded;
       });
     } catch (error) {

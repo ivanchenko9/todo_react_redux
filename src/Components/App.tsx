@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import jwtDecode from 'jwt-decode';
 import { setCurrentUser } from '../redux/reducers/authReducer';
+import { setTodosAll } from '../redux/reducers/todoReducer'
 import todosAPI, { setAuthToken } from '../api/api';
 import Nav from './Nav';
 import Header from './Header';
@@ -21,6 +22,7 @@ const App: React.FunctionComponent = () => {
       if (decoded.exp < currentTime) {
         todosAPI.logout();
         dispatch(setCurrentUser({}));
+        dispatch(setTodosAll([]))
       }
     }
   }, []);

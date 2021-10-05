@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import useStyles from '../../styles';
 import todosAPI from '../../api/api';
 import { setCurrentUser } from '../../redux/reducers/authReducer';
+import { setTodosAll } from '../../redux/reducers/todoReducer'
 
 const Nav: React.FunctionComponent = () => {
   const classes = useStyles();
@@ -16,6 +17,7 @@ const Nav: React.FunctionComponent = () => {
   const onLogoutClick = () => {
     todosAPI.logout();
     dispatch(setCurrentUser({}));
+    dispatch(setTodosAll([]))
   };
 
   if (isAuthenticated) {
