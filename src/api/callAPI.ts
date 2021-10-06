@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ITodos } from '../redux/types';
+import { ITodos, UpdateInfo } from '../redux/types';
 import { AxiosResponse } from './axiosTypes';
 
 interface ToUpdate {
@@ -28,13 +28,18 @@ class CallAPI {
           Authorization: token,
         },
       });
+      console.log('setAuthToken is invoked and it`s true: ', this.instance);
     } else {
       this.instance = axios.create({
         baseURL: 'http://localhost:3000',
       });
+      console.log('setAuthToken is invoked and it`s true: ', this.instance);
     }
   };
 
+  // requestToAPI(params) {
+
+  // }
   addTodo = (body: ITodos) => {
     try {
       return this.instance
@@ -45,14 +50,10 @@ class CallAPI {
     }
   };
 
-  updateTodo = (selectedId: number, newTodoStatus: boolean) => {
+  updateTodo = (bodyToUpdate: UpdateInfo) => {
     try {
-      const body: ToUpdate = {
-        id: selectedId,
-        isCompleted: newTodoStatus,
-      };
       return this.instance
-        .patch('/todos/update', body)
+        .patch('/todos/update', bodyToUpdate)
         .then((response: AxiosResponse) => response);
     } catch (error) {
       console.error(error);
@@ -107,13 +108,12 @@ class CallAPI {
 
   login = (userData) => {
     try {
-      console.log(this);
       return this.instance
         .post('/login', userData)
         .then((response: AxiosResponse) => {
           const { token } = response.data;
           localStorage.setItem('access_token', token);
-          //   this.setAuthToken(token);
+          this.setAuthToken(token);
           //   const decoded = jwtDecode(token);
           //   return { response, decoded };
           return response;

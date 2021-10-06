@@ -3,6 +3,8 @@ import {
   getTodosWatcher,
   createTaskWatcher,
   setTodosWatcher,
+  updateTaskWatcher,
+  deleteTaskWatcher,
   changeIsConfirmedAllStatusWatcher,
 } from './todosSaga';
 import {
@@ -18,6 +20,8 @@ export default function* rootWatcher() {
     createTaskWatcher(),
     setTodosWatcher(),
     changeIsConfirmedAllStatusWatcher(),
+    updateTaskWatcher(),
+    deleteTaskWatcher(),
     setCurrentUserWatcher(),
     setCurrentUserFromLSWatcher(),
     registrationWatcher(),

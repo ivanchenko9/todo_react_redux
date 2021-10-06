@@ -14,7 +14,6 @@ const Nav: React.FunctionComponent = () => {
   let links;
   const dispatch = useDispatch();
   const onLogoutClick = () => {
-    todosAPI.logout();
     dispatch(logoutAC());
   };
 

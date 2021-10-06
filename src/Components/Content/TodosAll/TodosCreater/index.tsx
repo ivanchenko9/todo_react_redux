@@ -3,11 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import TodosCreator from './TodosCreator';
 import {
   createTaskAC,
-  setTodosAC,
   changeIsConfirmedAllStatusAC,
 } from '../../../../redux/reducers/todoReducer';
 import { ITodos } from '../../../../redux/types';
-import todosAPI from '../../../../api/api';
 
 const TodosCreatorContainer: React.FunctionComponent = () => {
   const todosAll = useSelector((state) => state.todoReducer.todosAll);
@@ -16,9 +14,7 @@ const TodosCreatorContainer: React.FunctionComponent = () => {
   const [inputValue, setInputValue] = useState<string>('');
   const [isConfirmedAllStatus, setIsConfirmedAllStatus] =
     useState<boolean>(false);
-
   const onConfirmAllClick = () => {
-    todosAPI.completeAll(!isConfirmedAllStatus);
     let newArray: ITodos[];
     if (isConfirmedAllStatus) {
       newArray = todosAll.map((todo: ITodos) => ({
@@ -32,7 +28,6 @@ const TodosCreatorContainer: React.FunctionComponent = () => {
       }));
     }
     setIsConfirmedAllStatus(!isConfirmedAllStatus);
-    dispatch(setTodosAC(newArray));
     dispatch(changeIsConfirmedAllStatusAC(isConfirmedAllStatus));
   };
 
@@ -43,7 +38,12 @@ const TodosCreatorContainer: React.FunctionComponent = () => {
   const onAddTaskClick = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
       if (inputValue !== '') {
-        dispatch(createTaskAC(inputValue));
+        const newTask = {
+          id: Date.now(),
+          title: inputValue,
+          isCompleted: false,
+        };
+        dispatch(createTaskAC(newTask));
         setInputValue('');
       }
     }

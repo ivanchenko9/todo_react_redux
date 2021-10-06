@@ -5,6 +5,8 @@ import {
   createTask,
   setTodos,
   changeIsConfirmedAllStatus,
+  updateTask,
+  deleteTask,
 } from '../redux/actions';
 
 function* getTodosWorker() {
@@ -67,6 +69,44 @@ function* changeIsConfirmedAllStatusWorker(action) {
   }
 }
 
+function* updateTaskWorker(action) {
+  let response;
+  try {
+    response = yield call(callAPI.updateTodo, action.payload);
+    const newArr = response.data;
+    yield put({ type: updateTask.SUCCESS, payload: newArr });
+  } catch (error) {
+    if (response.status === 401) {
+      // should send req for refresh token and then call getTodosWorker again
+      console.log('User is unauthorized');
+    }
+    yield put({
+      type: updateTask.FAILED,
+      payload: 'Failed to complete all tasks!',
+    });
+    console.error(error);
+  }
+}
+
+function* deleteTaskWorker(action) {
+  let response;
+  try {
+    response = yield call(callAPI.deleteTodo, action.payload);
+    const newArr = response.data;
+    yield put({ type: deleteTask.SUCCESS, payload: newArr });
+  } catch (error) {
+    if (response.status === 401) {
+      // should send req for refresh token and then call getTodosWorker again
+      console.log('User is unauthorized');
+    }
+    yield put({
+      type: deleteTask.FAILED,
+      payload: 'Failed to complete all tasks!',
+    });
+    console.error(error);
+  }
+}
+
 export function* getTodosWatcher() {
   yield takeEvery(getTodos.REQUEST, getTodosWorker);
 }
@@ -84,4 +124,12 @@ export function* changeIsConfirmedAllStatusWatcher() {
     changeIsConfirmedAllStatus.REQUEST,
     changeIsConfirmedAllStatusWorker,
   );
+}
+
+export function* updateTaskWatcher() {
+  yield takeEvery(updateTask.REQUEST, updateTaskWorker);
+}
+
+export function* deleteTaskWatcher() {
+  yield takeEvery(deleteTask.REQUEST, deleteTaskWorker);
 }

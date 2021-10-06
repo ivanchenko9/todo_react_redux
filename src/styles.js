@@ -109,6 +109,21 @@ const useStyles = createUseStyles({
     width: '100%',
     padding: [[10, 20]],
   },
+  unauthorized__todos: {
+    'background-color': 'rgb(248, 248, 248)',
+    'box-shadow': '1px 6px 22px -9px rgba(0,0,0,0.89)',
+    'border-radius': 3,
+    width: '100%',
+    padding: [[5, 20]],
+  },
+  unauthorized__title: {
+    'font-size': 16,
+    'font-weight': 600,
+    'text-transform': 'uppercase',
+    opacity: 0.7,
+    'text-align': 'center',
+    'margin-bottom': '10px',
+  },
 });
 
 export default useStyles;

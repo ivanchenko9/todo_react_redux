@@ -3,6 +3,8 @@ import {
   createTask,
   setTodos,
   changeIsConfirmedAllStatus,
+  updateTask,
+  deleteTask,
   setCurrentUser,
   setCurrentUserFromLS,
   registration,
@@ -18,6 +20,11 @@ export interface ITodos {
 export interface IUser {
   login: string;
   password: string;
+}
+
+export interface UpdateInfo {
+  id: number;
+  isCompleted: boolean;
 }
 
 export interface TodoState {
@@ -45,6 +52,24 @@ interface CreateTaskSuccessAction {
 }
 interface CreateTaskFailedAction {
   type: createTask.FAILED;
+  payload: string;
+}
+
+interface UpdateTaskSuccessAction {
+  type: updateTask.SUCCESS;
+  payload: ITodos[];
+}
+interface UpdateTaskFailedAction {
+  type: updateTask.FAILED;
+  payload: string;
+}
+
+interface DeleteTaskSuccessAction {
+  type: deleteTask.SUCCESS;
+  payload: ITodos[];
+}
+interface DeleteTaskFailedAction {
+  type: deleteTask.FAILED;
   payload: string;
 }
 
@@ -111,6 +136,10 @@ export type TodoAction =
   | GetTodosFailedAction
   | CreateTaskSuccessAction
   | CreateTaskFailedAction
+  | UpdateTaskSuccessAction
+  | UpdateTaskFailedAction
+  | DeleteTaskSuccessAction
+  | DeleteTaskFailedAction
   | SetTodosSuccessAction
   | SetTodosFailedAction
   | ChangeIsConfirmedAllStatusSuccessAction

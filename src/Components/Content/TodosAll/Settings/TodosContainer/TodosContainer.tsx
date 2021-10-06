@@ -1,9 +1,11 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Todo from './Todo';
-import { setTodosAC } from '../../../../../redux/reducers/todoReducer';
+import {
+  updateTaskAC,
+  deleteTaskAC,
+} from '../../../../../redux/reducers/todoReducer';
 import { ITodos } from '../../../../../redux/types';
-import todosAPI from '../../../../../api/api';
 
 interface MyProps {
   arrToDisplay: string;
@@ -11,10 +13,14 @@ interface MyProps {
 const TodosContainer: React.FunctionComponent<MyProps> = ({ arrToDisplay }) => {
   const todosAll = useSelector((state) => state.todoReducer.todosAll);
   const dispatch = useDispatch();
+  let updateInfo;
   const onChangeStatusClick = (todoId: number) => {
     const newArray = todosAll.map((todo: ITodos) => {
       if (todo.id === todoId) {
-        todosAPI.updateTodo(todoId, todosAll);
+        updateInfo = {
+          id: todoId,
+          isCompleted: !todo.isCompleted,
+        };
         return {
           ...todo,
           isCompleted: !todo.isCompleted,
@@ -22,13 +28,11 @@ const TodosContainer: React.FunctionComponent<MyProps> = ({ arrToDisplay }) => {
       }
       return { ...todo };
     });
-    dispatch(setTodosAC(newArray));
+    dispatch(updateTaskAC(updateInfo));
   };
 
   const onDeleteTodoClick = (todoId: number) => {
-    todosAPI.deleteTodo(todoId);
-    const newArray = todosAll.filter((todo: ITodos) => todo.id !== todoId);
-    dispatch(setTodosAC(newArray));
+    dispatch(deleteTaskAC(todoId));
   };
 
   const whichArrayShouldDisplay = (): ITodos[] => {
