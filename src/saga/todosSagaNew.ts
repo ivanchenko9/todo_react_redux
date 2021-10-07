@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
-import callAPI from '../api/callAPI';
+import fetchToAPI from '../api/fetchToAPI';
 import {
   getTodos,
   createTask,
@@ -10,33 +10,20 @@ import {
 } from '../redux/actions';
 
 function* getTodosWorker() {
-  let response;
   try {
-    response = yield callAPI.getTodos();
-    const newArr = response.data;
+    const newArr = yield fetchToAPI.getTodos();
     yield put({ type: getTodos.SUCCESS, payload: newArr });
   } catch (error) {
-    if (response.status === 401) {
-      // should send req for refresh token and then call getTodosWorker again
-      console.log('User is unauthorized');
-    }
     yield put({ type: getTodos.FAILED, payload: 'Failed to get todos!' });
     console.error(error);
   }
 }
 
 function* createTaskWorker(action) {
-  let response;
   try {
-    response = yield call(callAPI.addTodo, action.payload);
-    console.log('Server responce on adding new task: ', response);
-    const newArr = response.data;
+    const newArr = yield call(fetchToAPI.addTodo, action.payload);
     yield put({ type: createTask.SUCCESS, payload: newArr });
   } catch (error) {
-    if (response.status === 401) {
-      // should send req for refresh token and then call getTodosWorker again
-      console.log('User is unauthorized');
-    }
     yield put({ type: createTask.FAILED, payload: 'Failed to add task!' });
     console.error(error);
   }
@@ -52,16 +39,10 @@ function* setTodosWorker(action) {
 }
 
 function* changeIsConfirmedAllStatusWorker(action) {
-  let response;
   try {
-    response = yield call(callAPI.completeAll, action.payload);
-    const newArr = response.data;
+    const newArr = yield call(fetchToAPI.completeAll, action.payload);
     yield put({ type: changeIsConfirmedAllStatus.SUCCESS, payload: newArr });
   } catch (error) {
-    if (response.status === 401) {
-      // should send req for refresh token and then call getTodosWorker again
-      console.log('User is unauthorized');
-    }
     yield put({
       type: changeIsConfirmedAllStatus.FAILED,
       payload: 'Failed to complete all tasks!',
@@ -71,16 +52,10 @@ function* changeIsConfirmedAllStatusWorker(action) {
 }
 
 function* updateTaskWorker(action) {
-  let response;
   try {
-    response = yield call(callAPI.updateTodo, action.payload);
-    const newArr = response.data;
+    const newArr = yield call(fetchToAPI.updateTodo, action.payload);
     yield put({ type: updateTask.SUCCESS, payload: newArr });
   } catch (error) {
-    if (response.status === 401) {
-      // should send req for refresh token and then call getTodosWorker again
-      console.log('User is unauthorized');
-    }
     yield put({
       type: updateTask.FAILED,
       payload: 'Failed to complete all tasks!',
@@ -90,16 +65,10 @@ function* updateTaskWorker(action) {
 }
 
 function* deleteTaskWorker(action) {
-  let response;
   try {
-    response = yield call(callAPI.deleteTodo, action.payload);
-    const newArr = response.data;
+    const newArr = yield call(fetchToAPI.deleteTodo, action.payload);
     yield put({ type: deleteTask.SUCCESS, payload: newArr });
   } catch (error) {
-    if (response.status === 401) {
-      // should send req for refresh token and then call getTodosWorker again
-      console.log('User is unauthorized');
-    }
     yield put({
       type: deleteTask.FAILED,
       payload: 'Failed to complete all tasks!',

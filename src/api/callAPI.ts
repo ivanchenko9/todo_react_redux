@@ -33,7 +33,7 @@ class CallAPI {
       this.instance = axios.create({
         baseURL: 'http://localhost:3000',
       });
-      console.log('setAuthToken is invoked and it`s true: ', this.instance);
+      console.log('setAuthToken is invoked and it`s false: ', this.instance);
     }
   };
 

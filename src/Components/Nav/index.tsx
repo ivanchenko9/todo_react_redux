@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button, ButtonGroup } from '@mui/material';
 import { Link } from 'react-router-dom';
 import useStyles from '../../styles';
-import todosAPI from '../../api/api';
 import { logoutAC } from '../../redux/reducers/authReducer';
 
 const Nav: React.FunctionComponent = () => {

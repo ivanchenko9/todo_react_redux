@@ -3,9 +3,9 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTodosAC } from '../../../../redux/reducers/todoReducer';
+import fetchToAPI from '../../../../api/fetchToAPI';
 import TodosCreatorContainer from './TodosContainer/TodosContainer';
 import { ITodos } from '../../../../redux/types';
-import todosAPI from '../../../../api/api';
 import useStyles from '../../../../styles';
 
 const Settings: React.FunctionComponent = () => {
@@ -41,11 +41,8 @@ const Settings: React.FunctionComponent = () => {
     return 0;
   };
 
-  const onClearCompletedClick = () => {
-    todosAPI.clearDone();
-    const newArray: ITodos[] = todosAll.filter(
-      (todo: ITodos) => todo.isCompleted !== true,
-    );
+  const onClearCompletedClick = async () => {
+    const newArray = await fetchToAPI.clearDone();
     dispatch(setTodosAC(newArray));
   };
 

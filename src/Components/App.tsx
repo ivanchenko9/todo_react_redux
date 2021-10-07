@@ -13,10 +13,10 @@ const App: React.FunctionComponent = () => {
   useEffect(() => {
     if (localStorage.access_token) {
       const { access_token } = localStorage;
+      console.log('Token in LC is => ', access_token);
       dispatch(setCurrentUserFromLSAC(access_token));
     }
   }, []);
-
   return (
     <div className={classes.container}>
       <Nav />
