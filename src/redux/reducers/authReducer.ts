@@ -51,8 +51,9 @@ export const registrationAC = (user: IUser) => ({
   type: registration.REQUEST,
   payload: user,
 });
-export const logoutAC = () => ({
+export const logoutAC = (userId: string) => ({
   type: logout.REQUEST,
+  payload: userId,
 });
 
 export default authReducer;

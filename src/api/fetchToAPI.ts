@@ -5,36 +5,32 @@ const fetchToAPI = {
   async getTodos() {
     const method = 'GET';
     const url = 'http://localhost:3000/todos';
-    const newArr: ITodos[] = await callAPI.requestToApi(method, url);
-    return newArr;
+    const response = await callAPI.requestToApi(method, url);
+    return response.data;
   },
   async addTodo(newTask: ITodos) {
     const method = 'POST';
     const url = 'http://localhost:3000/todos';
-    const newArr: ITodos[] = await callAPI.requestToApi(method, url, newTask);
-    return newArr;
+    const response = await callAPI.requestToApi(method, url, newTask);
+    return response.data;
   },
   async updateTodo(bodyToUpdate: UpdateInfo) {
     const method = 'PATCH';
     const url = 'http://localhost:3000/todos/update';
-    const newArr: ITodos[] = await callAPI.requestToApi(
-      method,
-      url,
-      bodyToUpdate,
-    );
-    return newArr;
+    const response = await callAPI.requestToApi(method, url, bodyToUpdate);
+    return response.data;
   },
   async deleteTodo(selectedId: number) {
     const method = 'DELETE';
     const url = `http://localhost:3000/todos/delete?id=${selectedId}`;
-    const newArr: ITodos[] = await callAPI.requestToApi(method, url);
-    return newArr;
+    const response = await callAPI.requestToApi(method, url);
+    return response.data;
   },
   async clearDone() {
     const method = 'DELETE';
     const url = 'http://localhost:3000/todos/cleardone';
-    const newArr: ITodos[] = await callAPI.requestToApi(method, url);
-    return newArr;
+    const response = await callAPI.requestToApi(method, url);
+    return response.data;
   },
   async completeAll(isCompletedAllStatus: boolean) {
     const method = 'PATCH';
@@ -42,8 +38,8 @@ const fetchToAPI = {
     const data = {
       isCompletedAll: isCompletedAllStatus,
     };
-    const newArr: ITodos[] = await callAPI.requestToApi(method, url, data);
-    return newArr;
+    const response = await callAPI.requestToApi(method, url, data);
+    return response.data;
   },
   async registration(userData: IUser) {
     const method = 'POST';
@@ -53,21 +49,27 @@ const fetchToAPI = {
       url,
       userData,
     );
-    return registrationResponse;
+    return registrationResponse.data;
   },
   async login(userData: IUser) {
     const method = 'POST';
     const url = 'http://localhost:3000/login';
     const responseData = await callAPI.requestToApi(method, url, userData);
-    localStorage.setItem('access_token', responseData.token);
-    return responseData;
+    localStorage.setItem('access_token', responseData.data.token);
+    localStorage.setItem('refresh_token', responseData.data.refreshToken);
+    console.log('LocalStorage after login => ', localStorage);
+    return responseData.data;
   },
-  async logout() {
+  async logout(userId: string) {
     localStorage.removeItem('access_token');
-    // const method = 'POST';
-    // const url = 'http://localhost:3000/logout';
-    // const logoutResponse = await callAPI.requestToApi(method, url), userInfo;
-    const logoutResponse = { message: 'Logout successfuly!' };
+    localStorage.removeItem('refresh_token');
+    const method = 'POST';
+    const url = 'http://localhost:3000/logout';
+    const body = {
+      id: userId,
+    };
+    const logoutResponse = await callAPI.requestToApi(method, url, body);
+    console.log('LocalStorage after logout => ', localStorage);
     return logoutResponse;
   },
 };

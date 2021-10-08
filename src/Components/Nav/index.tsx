@@ -10,10 +10,11 @@ const Nav: React.FunctionComponent = () => {
   const isAuthenticated = useSelector(
     (state) => state.authReducer.isAuthenticated,
   );
+  const currentUserId = useSelector((state) => state.authReducer.user._id);
   let links;
   const dispatch = useDispatch();
   const onLogoutClick = () => {
-    dispatch(logoutAC());
+    dispatch(logoutAC(currentUserId));
   };
 
   if (isAuthenticated) {
@@ -22,12 +23,12 @@ const Nav: React.FunctionComponent = () => {
         <Button size="small">
           <Link to="/todos">todos</Link>
         </Button>
-        <Button size="small">
+        {/* <Button size="small">
           <Link to="/auth">auth</Link>
         </Button>
         <Button size="small">
           <Link to="/registration">registration</Link>
-        </Button>
+        </Button> */}
         <Button size="small" onClick={onLogoutClick}>
           Logout
         </Button>
@@ -39,9 +40,9 @@ const Nav: React.FunctionComponent = () => {
         <Button size="small">
           <Link to="/auth">auth</Link>
         </Button>
-        <Button size="small">
+        {/* <Button size="small">
           <Link to="/registration">registration</Link>
-        </Button>
+        </Button> */}
       </ButtonGroup>
     );
   }

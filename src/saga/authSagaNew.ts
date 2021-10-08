@@ -50,10 +50,9 @@ function* setCurrentUserFromLSWorker(action) {
   }
 }
 
-function* logoutWorker() {
-  console.log('Try to log out....');
+function* logoutWorker(action) {
   try {
-    const response = yield fetchToAPI.logout();
+    const response = yield call(fetchToAPI.logout, action.payload);
     yield put({ type: logout.SUCCESS, payload: {} });
   } catch (error) {
     yield put({

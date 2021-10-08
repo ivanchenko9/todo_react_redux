@@ -31,6 +31,7 @@
     "dot-notation": "off",
     "no-restricted-globals": "off",
     "camelcase": "off",
-    "no-else-return": "off"
+    "no-else-return": "off",
+    "function-paren-newline": "off"
   }
 }

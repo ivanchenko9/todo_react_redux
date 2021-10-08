@@ -18,7 +18,34 @@ class CallAPI {
   }
 
   refreshToken = async () => {
-    console.log('Try to get new token');
+    try {
+      console.log(
+        'try to refresh tokens... localeStorage refresh_token is --->',
+        localStorage.refresh_token,
+      );
+      const { refresh_token } = localStorage;
+      const method = 'POST';
+      const url = 'http://localhost:3000/refresh';
+      const data = {
+        refreshToken: refresh_token,
+      };
+      const requestSettings = {
+        method,
+        url,
+        data,
+      };
+      const refreshResponse = await axios(requestSettings).then(
+        (response: AxiosResponse) => response,
+      );
+      const newAccessToken = refreshResponse.data.token;
+      const newRefreshToken = refreshResponse.data.refreshToken;
+      localStorage.setItem('access_token', newAccessToken);
+      localStorage.setItem('refresh_token', newRefreshToken);
+      console.log('refresh succesfuly...');
+    } catch (error) {
+      console.log('some serious error...');
+      console.error(error);
+    }
   };
 
   requestToApi = async (method: string, url: string, data?: any) => {
@@ -52,24 +79,26 @@ class CallAPI {
       }
 
       console.log('in API axiosSettings eaqual to => ', this.axiosSettings);
-      response = await axios(this.axiosSettings).then(
-        (response: AxiosResponse) => response,
-      );
-
-      console.log('in API response eaqual to => ', response);
+      response = await axios(this.axiosSettings)
+        .then((response: AxiosResponse) => response)
+        .catch((error) =>
+          console.log('Error in the promise catch block => ', error),
+        );
 
       if (
         response.status === 200 ||
         response.status === 201 ||
         response.status === 204
       ) {
-        return response.data;
+        return response;
       }
     } catch (error) {
-      if (response.status === 401) {
-        // console.log('You are not authorized!');
+      if (localStorage.refresh_token) {
         this.refreshToken();
-        this.requestToApi(method, url, data);
+        response = await this.requestToApi(method, url, data);
+        return response;
+      } else {
+        console.log('There is no token in the LC!');
       }
       console.error(error);
     }
