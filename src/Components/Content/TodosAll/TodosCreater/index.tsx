@@ -5,7 +5,7 @@ import {
   createTaskAC,
   changeIsConfirmedAllStatusAC,
 } from '../../../../redux/reducers/todoReducer';
-import { ITodos } from '../../../../redux/types';
+import { ITodos, completeAllObj } from '../../../../redux/types';
 
 const TodosCreatorContainer: React.FunctionComponent = () => {
   const todosAll = useSelector((state) => state.todoReducer.todosAll);
@@ -16,6 +16,7 @@ const TodosCreatorContainer: React.FunctionComponent = () => {
     useState<boolean>(false);
   const onConfirmAllClick = () => {
     let newArray: ITodos[];
+    const todosIdToUpdate = [];
     if (isConfirmedAllStatus) {
       newArray = todosAll.map((todo: ITodos) => ({
         ...todo,
@@ -27,8 +28,15 @@ const TodosCreatorContainer: React.FunctionComponent = () => {
         isCompleted: true,
       }));
     }
+    todosAll.forEach((todo: ITodos) => {
+      todosIdToUpdate.push(todo.id);
+    });
+    const body: completeAllObj = {
+      isCompletedAll: isConfirmedAllStatus,
+      todosIdToUpdate,
+    };
     setIsConfirmedAllStatus(!isConfirmedAllStatus);
-    dispatch(changeIsConfirmedAllStatusAC(isConfirmedAllStatus));
+    dispatch(changeIsConfirmedAllStatusAC(body));
   };
 
   const onChangeInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {

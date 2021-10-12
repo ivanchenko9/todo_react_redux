@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
@@ -10,6 +11,7 @@ import { registrationAC } from '../../../redux/reducers/authReducer';
 const Registration: React.FunctionComponent = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const [isRegSuccesfull, setisRegSuccesfull] = useState<boolean>(false);
   const [login, setLogin] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
@@ -30,6 +32,7 @@ const Registration: React.FunctionComponent = () => {
     dispatch(registrationAC(user));
     setLogin('');
     setPassword('');
+    setisRegSuccesfull(true);
   };
 
   return (
@@ -68,6 +71,7 @@ const Registration: React.FunctionComponent = () => {
           <Link to="/auth"> Log in account </Link>
         </Button>
       </ButtonGroup>
+      {isRegSuccesfull ? <Redirect to="/auth" /> : null}
     </section>
   );
 };

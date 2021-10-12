@@ -37,6 +37,11 @@ export interface AuthState {
   user: any;
 }
 
+export interface completeAllObj {
+  isCompletedAll: boolean;
+  todosIdToUpdate: number[];
+}
+
 interface GetTodosSuccessAction {
   type: getTodos.SUCCESS;
   payload: ITodos[];
@@ -84,7 +89,7 @@ interface SetTodosFailedAction {
 
 interface ChangeIsConfirmedAllStatusSuccessAction {
   type: changeIsConfirmedAllStatus.SUCCESS;
-  payload: boolean;
+  payload: completeAllObj;
 }
 interface ChangeIsConfirmedAllStatusFailedAction {
   type: changeIsConfirmedAllStatus.FAILED;

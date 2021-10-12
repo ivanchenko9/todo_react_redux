@@ -1,49 +1,47 @@
+import config from '../../config';
 import callAPI from './API';
-import { ITodos, IUser, UpdateInfo } from '../redux/types';
+import { ITodos, IUser, UpdateInfo, completeAllObj } from '../redux/types';
 
 const fetchToAPI = {
   async getTodos() {
     const method = 'GET';
-    const url = 'http://localhost:3000/todos';
+    const url = `${config.url}/todos`;
     const response = await callAPI.requestToApi(method, url);
     return response.data;
   },
   async addTodo(newTask: ITodos) {
     const method = 'POST';
-    const url = 'http://localhost:3000/todos';
+    const url = `${config.url}/todos`;
     const response = await callAPI.requestToApi(method, url, newTask);
     return response.data;
   },
   async updateTodo(bodyToUpdate: UpdateInfo) {
     const method = 'PATCH';
-    const url = 'http://localhost:3000/todos/update';
+    const url = `${config.url}/todos`;
     const response = await callAPI.requestToApi(method, url, bodyToUpdate);
     return response.data;
   },
   async deleteTodo(selectedId: number) {
     const method = 'DELETE';
-    const url = `http://localhost:3000/todos/delete?id=${selectedId}`;
+    const url = `${config.url}/todos/?id=${selectedId}`;
     const response = await callAPI.requestToApi(method, url);
     return response.data;
   },
   async clearDone() {
     const method = 'DELETE';
-    const url = 'http://localhost:3000/todos/cleardone';
+    const url = `${config.url}/todos`;
     const response = await callAPI.requestToApi(method, url);
     return response.data;
   },
-  async completeAll(isCompletedAllStatus: boolean) {
-    const method = 'PATCH';
-    const url = 'http://localhost:3000/todos/completeall';
-    const data = {
-      isCompletedAll: isCompletedAllStatus,
-    };
-    const response = await callAPI.requestToApi(method, url, data);
+  async completeAll(usersData: completeAllObj) {
+    const method = 'POST';
+    const url = `${config.url}/todos/bulkupdate`;
+    const response = await callAPI.requestToApi(method, url, usersData);
     return response.data;
   },
   async registration(userData: IUser) {
     const method = 'POST';
-    const url = 'http://localhost:3000/registration';
+    const url = `${config.url}/registration`;
     const registrationResponse = await callAPI.requestToApi(
       method,
       url,
@@ -53,7 +51,7 @@ const fetchToAPI = {
   },
   async login(userData: IUser) {
     const method = 'POST';
-    const url = 'http://localhost:3000/login';
+    const url = `${config.url}/login`;
     const responseData = await callAPI.requestToApi(method, url, userData);
     localStorage.setItem('access_token', responseData.data.token);
     localStorage.setItem('refresh_token', responseData.data.refreshToken);
@@ -62,7 +60,7 @@ const fetchToAPI = {
   },
   async logout(userId: string) {
     const method = 'POST';
-    const url = 'http://localhost:3000/logout';
+    const url = `${config.url}/logout`;
     const body = {
       id: userId,
     };

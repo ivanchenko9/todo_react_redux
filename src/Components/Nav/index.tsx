@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, ButtonGroup } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router';
 import useStyles from '../../styles';
 import { logoutAC } from '../../redux/reducers/authReducer';
 
@@ -24,12 +25,6 @@ const Nav: React.FunctionComponent = () => {
         <Button size="small">
           <Link to="/todos">todos</Link>
         </Button>
-        {/* <Button size="small">
-          <Link to="/auth">auth</Link>
-        </Button>
-        <Button size="small">
-          <Link to="/registration">registration</Link>
-        </Button> */}
         <Button size="small" onClick={onLogoutClick}>
           Logout
         </Button>
@@ -39,11 +34,8 @@ const Nav: React.FunctionComponent = () => {
     links = (
       <ButtonGroup variant="text" aria-label="text button group">
         <Button size="small">
-          <Link to="/auth">auth</Link>
+          <Link to="/auth">Login</Link>
         </Button>
-        {/* <Button size="small">
-          <Link to="/registration">registration</Link>
-        </Button> */}
       </ButtonGroup>
     );
   }
@@ -52,6 +44,7 @@ const Nav: React.FunctionComponent = () => {
     <div className={classes.nav}>
       <div></div>
       <div>{links}</div>
+      {isAuthenticated ? <Redirect to="/todos" /> : <Redirect to="/auth" />}
     </div>
   );
 };

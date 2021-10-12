@@ -1,4 +1,5 @@
 import axios from 'axios';
+import config from '../../config';
 import { AxiosResponse } from './axiosTypes';
 
 interface ToUpdate {
@@ -21,7 +22,7 @@ class CallAPI {
     try {
       const { refresh_token } = localStorage;
       const method = 'POST';
-      const url = 'http://localhost:3000/refresh';
+      const url = `${config.url}/refresh`;
       const data = {
         refreshToken: refresh_token,
       };
