@@ -19,10 +19,6 @@ class CallAPI {
 
   refreshToken = async () => {
     try {
-      console.log(
-        'try to refresh tokens... localeStorage refresh_token is --->',
-        localStorage.refresh_token,
-      );
       const { refresh_token } = localStorage;
       const method = 'POST';
       const url = 'http://localhost:3000/refresh';
@@ -42,9 +38,11 @@ class CallAPI {
       localStorage.setItem('access_token', newAccessToken);
       localStorage.setItem('refresh_token', newRefreshToken);
       console.log('refresh succesfuly...');
+      return true;
     } catch (error) {
       console.log('some serious error...');
       console.error(error);
+      return false;
     }
   };
 
@@ -94,9 +92,14 @@ class CallAPI {
       }
     } catch (error) {
       if (localStorage.refresh_token) {
-        this.refreshToken();
-        response = await this.requestToApi(method, url, data);
-        return response;
+        const refreshResult = await this.refreshToken();
+        if (refreshResult) {
+          response = await this.requestToApi(method, url, data);
+          return response;
+        } else {
+          response = { message: 'Failed to update refresh token!' };
+          return response;
+        }
       } else {
         console.log('There is no token in the LC!');
       }

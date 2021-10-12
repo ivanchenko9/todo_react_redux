@@ -61,14 +61,14 @@ const fetchToAPI = {
     return responseData.data;
   },
   async logout(userId: string) {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
     const method = 'POST';
     const url = 'http://localhost:3000/logout';
     const body = {
       id: userId,
     };
     const logoutResponse = await callAPI.requestToApi(method, url, body);
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
     console.log('LocalStorage after logout => ', localStorage);
     return logoutResponse;
   },

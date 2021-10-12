@@ -13,7 +13,10 @@ const App: React.FunctionComponent = () => {
   useEffect(() => {
     if (localStorage.access_token) {
       const { access_token } = localStorage;
-      console.log('Token in LC is => ', access_token);
+      // if (access_token.expIn < Date.now()) {
+      //   localStorage.removeItem('access_token');
+      //   return;
+      // }
       dispatch(setCurrentUserFromLSAC(access_token));
     }
   }, []);

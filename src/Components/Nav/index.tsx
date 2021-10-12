@@ -10,10 +10,11 @@ const Nav: React.FunctionComponent = () => {
   const isAuthenticated = useSelector(
     (state) => state.authReducer.isAuthenticated,
   );
-  const currentUserId = useSelector((state) => state.authReducer.user._id);
+  const currentUserId = useSelector((state) => state.authReducer.user.id);
   let links;
   const dispatch = useDispatch();
   const onLogoutClick = () => {
+    console.log('User id => ', currentUserId);
     dispatch(logoutAC(currentUserId));
   };
 
