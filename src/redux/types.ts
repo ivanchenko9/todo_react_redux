@@ -37,6 +37,11 @@ export interface AuthState {
   user: any;
 }
 
+export interface SnakBarState {
+  isSuccesfull: boolean;
+  messegaStatus: string;
+}
+
 export interface completeAllObj {
   isCompletedAll: boolean;
   todosIdToUpdate: number[];
@@ -45,95 +50,104 @@ export interface completeAllObj {
 interface GetTodosSuccessAction {
   type: getTodos.SUCCESS;
   payload: ITodos[];
+  message: string;
 }
 interface GetTodosFailedAction {
   type: getTodos.FAILED;
-  payload: string;
+  message: string;
 }
 
 interface CreateTaskSuccessAction {
   type: createTask.SUCCESS;
   payload: string;
+  message: string;
 }
 interface CreateTaskFailedAction {
   type: createTask.FAILED;
-  payload: string;
+  message: string;
 }
 
 interface UpdateTaskSuccessAction {
   type: updateTask.SUCCESS;
   payload: ITodos[];
+  message: string;
 }
 interface UpdateTaskFailedAction {
   type: updateTask.FAILED;
-  payload: string;
+  message: string;
 }
 
 interface DeleteTaskSuccessAction {
   type: deleteTask.SUCCESS;
   payload: ITodos[];
+  message: string;
 }
 interface DeleteTaskFailedAction {
   type: deleteTask.FAILED;
-  payload: string;
+  message: string;
 }
 
 interface SetTodosSuccessAction {
   type: setTodos.SUCCESS;
   payload: ITodos[];
+  message: string;
 }
 interface SetTodosFailedAction {
   type: setTodos.FAILED;
-  payload: string;
+  message: string;
 }
 
 interface ChangeIsConfirmedAllStatusSuccessAction {
   type: changeIsConfirmedAllStatus.SUCCESS;
   payload: completeAllObj;
+  message: string;
 }
 interface ChangeIsConfirmedAllStatusFailedAction {
   type: changeIsConfirmedAllStatus.FAILED;
-  payload: string;
+  message: string;
 }
 
 interface SetCurrnetUserSuccessAction {
   type: setCurrentUser.SUCCESS;
   payload: any;
+  message: string;
 }
 
 interface SetCurrnetUserFailedAction {
   type: setCurrentUser.FAILED;
-  payload: string;
+  message: string;
 }
 
 interface setCurrentUserFromLSSuccessAction {
   type: setCurrentUserFromLS.SUCCESS;
   payload: any;
+  message: string;
 }
 
 interface setCurrentUserFromLSFailedAction {
   type: setCurrentUserFromLS.FAILED;
-  payload: string;
+  message: string;
 }
 
 interface registrationSuccessAction {
   type: registration.SUCCESS;
-  payload: any;
+  message: string;
 }
 
 interface registrationFailedAction {
   type: registration.FAILED;
-  payload: string;
+  message: string;
 }
 
 interface logoutSuccessAction {
   type: logout.SUCCESS;
   payload: any;
+  message: string;
 }
 
 interface logoutFailedAction {
   type: logout.FAILED;
-  payload: string;
+  message: string;
 }
 
 export type TodoAction =
@@ -161,3 +175,5 @@ export type AuthAction =
   | registrationFailedAction
   | logoutSuccessAction
   | logoutFailedAction;
+
+export type SnakBarAction = TodoAction | AuthAction;

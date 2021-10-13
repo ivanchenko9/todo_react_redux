@@ -12,9 +12,13 @@ import {
 function* getTodosWorker() {
   try {
     const newArr = yield fetchToAPI.getTodos();
-    yield put({ type: getTodos.SUCCESS, payload: newArr });
+    yield put({
+      type: getTodos.SUCCESS,
+      payload: newArr,
+      message: 'Todos succesfully loaded!',
+    });
   } catch (error) {
-    yield put({ type: getTodos.FAILED, payload: 'Failed to get todos!' });
+    yield put({ type: getTodos.FAILED, message: 'Failed to load todos!' });
     console.error(error);
   }
 }
@@ -22,18 +26,26 @@ function* getTodosWorker() {
 function* createTaskWorker(action) {
   try {
     const newArr = yield call(fetchToAPI.addTodo, action.payload);
-    yield put({ type: createTask.SUCCESS, payload: newArr });
+    yield put({
+      type: createTask.SUCCESS,
+      payload: newArr,
+      message: 'Todo added succesfully!',
+    });
   } catch (error) {
-    yield put({ type: createTask.FAILED, payload: 'Failed to add task!' });
+    yield put({ type: createTask.FAILED, message: 'Failed to add todo!' });
     console.error(error);
   }
 }
 
 function* setTodosWorker(action) {
   try {
-    yield put({ type: setTodos.SUCCESS, payload: action.payload });
+    yield put({
+      type: setTodos.SUCCESS,
+      payload: action.payload,
+      message: 'Setted new todos!',
+    });
   } catch (error) {
-    yield put({ type: setTodos.FAILED, payload: 'Failed to set todos!' });
+    yield put({ type: setTodos.FAILED, message: 'Failed to update todos!' });
     console.error(error);
   }
 }
@@ -41,11 +53,15 @@ function* setTodosWorker(action) {
 function* changeIsConfirmedAllStatusWorker(action) {
   try {
     const newArr = yield call(fetchToAPI.completeAll, action.payload);
-    yield put({ type: changeIsConfirmedAllStatus.SUCCESS, payload: newArr });
+    yield put({
+      type: changeIsConfirmedAllStatus.SUCCESS,
+      payload: newArr,
+      message: 'Todos updated!',
+    });
   } catch (error) {
     yield put({
       type: changeIsConfirmedAllStatus.FAILED,
-      payload: 'Failed to complete all tasks!',
+      message: 'Failed to update todos!',
     });
     console.error(error);
   }
@@ -54,11 +70,15 @@ function* changeIsConfirmedAllStatusWorker(action) {
 function* updateTaskWorker(action) {
   try {
     const newArr = yield call(fetchToAPI.updateTodo, action.payload);
-    yield put({ type: updateTask.SUCCESS, payload: newArr });
+    yield put({
+      type: updateTask.SUCCESS,
+      payload: newArr,
+      message: 'Todo updated!',
+    });
   } catch (error) {
     yield put({
       type: updateTask.FAILED,
-      payload: 'Failed to complete all tasks!',
+      message: 'Failed to update todo!',
     });
     console.error(error);
   }
@@ -67,11 +87,15 @@ function* updateTaskWorker(action) {
 function* deleteTaskWorker(action) {
   try {
     const newArr = yield call(fetchToAPI.deleteTodo, action.payload);
-    yield put({ type: deleteTask.SUCCESS, payload: newArr });
+    yield put({
+      type: deleteTask.SUCCESS,
+      payload: newArr,
+      message: 'Todo deleted succesfully!',
+    });
   } catch (error) {
     yield put({
       type: deleteTask.FAILED,
-      payload: 'Failed to complete all tasks!',
+      payload: 'Failed to delete todo!',
     });
     console.error(error);
   }

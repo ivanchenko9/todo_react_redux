@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
+import { Button, ButtonGroup, TextField } from '@mui/material';
 import useStyles from '../../../styles';
 import { setCurrentUserAC } from '../../../redux/reducers/authReducer';
 
@@ -50,6 +48,7 @@ const Auth: React.FunctionComponent = () => {
         <div className={classes.auth__and_reg__input}>
           <TextField
             id="fullWidth"
+            type="password"
             label="Your password"
             variant="standard"
             fullWidth

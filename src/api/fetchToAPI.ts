@@ -23,7 +23,7 @@ const fetchToAPI = {
   },
   async deleteTodo(selectedId: number) {
     const method = 'DELETE';
-    const url = `${config.url}/todos/?id=${selectedId}`;
+    const url = `${config.url}/todos/${selectedId}`;
     const response = await callAPI.requestToApi(method, url);
     return response.data;
   },
