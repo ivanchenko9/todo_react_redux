@@ -11,7 +11,10 @@ import {
 
 function* getTodosWorker() {
   try {
-    const newArr = yield fetchToAPI.getTodos();
+    let newArr = yield fetchToAPI.getTodos();
+    if (newArr === undefined) {
+      newArr = [];
+    }
     yield put({
       type: getTodos.SUCCESS,
       payload: newArr,
@@ -25,7 +28,10 @@ function* getTodosWorker() {
 
 function* createTaskWorker(action) {
   try {
-    const newArr = yield call(fetchToAPI.addTodo, action.payload);
+    let newArr = yield call(fetchToAPI.addTodo, action.payload);
+    if (newArr === undefined) {
+      newArr = [];
+    }
     yield put({
       type: createTask.SUCCESS,
       payload: newArr,
@@ -52,7 +58,10 @@ function* setTodosWorker(action) {
 
 function* changeIsConfirmedAllStatusWorker(action) {
   try {
-    const newArr = yield call(fetchToAPI.completeAll, action.payload);
+    let newArr = yield call(fetchToAPI.completeAll, action.payload);
+    if (newArr === undefined) {
+      newArr = [];
+    }
     yield put({
       type: changeIsConfirmedAllStatus.SUCCESS,
       payload: newArr,
@@ -69,7 +78,10 @@ function* changeIsConfirmedAllStatusWorker(action) {
 
 function* updateTaskWorker(action) {
   try {
-    const newArr = yield call(fetchToAPI.updateTodo, action.payload);
+    let newArr = yield call(fetchToAPI.updateTodo, action.payload);
+    if (newArr === undefined) {
+      newArr = [];
+    }
     yield put({
       type: updateTask.SUCCESS,
       payload: newArr,
@@ -86,7 +98,10 @@ function* updateTaskWorker(action) {
 
 function* deleteTaskWorker(action) {
   try {
-    const newArr = yield call(fetchToAPI.deleteTodo, action.payload);
+    let newArr = yield call(fetchToAPI.deleteTodo, action.payload);
+    if (newArr === undefined) {
+      newArr = [];
+    }
     yield put({
       type: deleteTask.SUCCESS,
       payload: newArr,

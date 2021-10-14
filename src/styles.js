@@ -124,6 +124,10 @@ const useStyles = createUseStyles({
     'text-align': 'center',
     'margin-bottom': '10px',
   },
+  error__text: {
+    'font-size': 12,
+    color: 'red',
+  },
 });
 
 export default useStyles;

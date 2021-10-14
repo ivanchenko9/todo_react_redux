@@ -114,7 +114,6 @@ const Registration: React.FunctionComponent = () => {
     <section className={classes.auth_and_reg_container}>
       <h2 className={classes.auth__and__reg__title}>Registration</h2>
       <form>
-        {emailDirty && emailError && <div>{emailError}</div>}
         <div className={classes.auth__and_reg__input}>
           <TextField
             id="fullWidth"
@@ -128,7 +127,9 @@ const Registration: React.FunctionComponent = () => {
             onBlur={blurHandler}
           />
         </div>
-        {loginDirty && loginError && <div>{loginError}</div>}
+        {emailDirty && emailError && (
+          <div className={classes.error__text}>{emailError}</div>
+        )}
         <div className={classes.auth__and_reg__input}>
           <TextField
             id="fullWidth"
@@ -142,7 +143,9 @@ const Registration: React.FunctionComponent = () => {
             onBlur={blurHandler}
           />
         </div>
-        {passwordDirty && passwordError && <div>{passwordError}</div>}
+        {loginDirty && loginError && (
+          <div className={classes.error__text}>{loginError}</div>
+        )}
         <div className={classes.auth__and_reg__input}>
           <TextField
             id="fullWidth"
@@ -157,6 +160,9 @@ const Registration: React.FunctionComponent = () => {
             onBlur={blurHandler}
           />
         </div>
+        {passwordDirty && passwordError && (
+          <div className={classes.error__text}>{passwordError}</div>
+        )}
         <div className={classes.auth__and_reg__button}>
           {formValid ? (
             <Button fullWidth variant="contained" onClick={onSubmitClick}>
