@@ -9,7 +9,7 @@ import {
   deleteTask,
 } from '../redux/actions';
 
-function* getTodosWorker() {
+function* getTodosWorker(action) {
   try {
     let newArr = yield fetchToAPI.getTodos();
     if (newArr === undefined) {

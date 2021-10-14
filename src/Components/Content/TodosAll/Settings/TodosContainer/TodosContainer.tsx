@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Todo from './Todo';
 import {
@@ -6,11 +6,13 @@ import {
   deleteTaskAC,
 } from '../../../../../redux/reducers/todoReducer';
 import { ITodos } from '../../../../../redux/types';
+import SocketContext from '../../../../../socketContext';
 
 interface MyProps {
   arrToDisplay: string;
 }
 const TodosContainer: React.FunctionComponent<MyProps> = ({ arrToDisplay }) => {
+  const socket = useContext(SocketContext);
   const todosAll = useSelector((state) => state.todoReducer.todosAll);
   const dispatch = useDispatch();
   let updateInfo;
@@ -28,11 +30,11 @@ const TodosContainer: React.FunctionComponent<MyProps> = ({ arrToDisplay }) => {
       }
       return { ...todo };
     });
-    dispatch(updateTaskAC(updateInfo));
+    dispatch(updateTaskAC(updateInfo, socket));
   };
 
   const onDeleteTodoClick = (todoId: number) => {
-    dispatch(deleteTaskAC(todoId));
+    dispatch(deleteTaskAC(todoId, socket));
   };
 
   const whichArrayShouldDisplay = (): ITodos[] => {

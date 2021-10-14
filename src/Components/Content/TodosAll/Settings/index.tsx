@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTodosAC } from '../../../../redux/reducers/todoReducer';
 import fetchToAPI from '../../../../api/fetchToAPI';
 import TodosCreatorContainer from './TodosContainer/TodosContainer';
-import { ITodos } from '../../../../redux/types';
 import useStyles from '../../../../styles';
+import SocketContext from '../../../../socketContext';
 
 const Settings: React.FunctionComponent = () => {
+  const socket = useContext(SocketContext);
   const todosAll = useSelector((state) => state.todoReducer.todosAll);
   const dispatch = useDispatch();
   const [arrToDisplay, setArrToDisplay] = useState<string>('all');
@@ -43,7 +44,7 @@ const Settings: React.FunctionComponent = () => {
 
   const onClearCompletedClick = async () => {
     const newArray = await fetchToAPI.clearDone();
-    dispatch(setTodosAC(newArray));
+    dispatch(setTodosAC(newArray, socket));
   };
 
   const onGetNewArrStatus = (event) => {

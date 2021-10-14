@@ -64,28 +64,38 @@ const todoReducer = (state = initilState, action: TodoAction): TodoState => {
   }
 };
 
-export const getTodosAC = () => ({
+export const getTodosAC = (socket) => ({
   type: getTodos.REQUEST,
+  socket,
 });
-export const createTaskAC = (newTask: ITodos) => ({
+export const createTaskAC = (newTask: ITodos, socket) => ({
   type: createTask.REQUEST,
   payload: newTask,
+  socket,
 });
-export const changeIsConfirmedAllStatusAC = (isConfirmedAll: boolean) => ({
+export const changeIsConfirmedAllStatusAC = (
+  isConfirmedAll: boolean,
+  socket,
+) => ({
   type: changeIsConfirmedAllStatus.REQUEST,
   payload: isConfirmedAll,
+  socket,
 });
-export const updateTaskAC = (updateInfo: UpdateInfo) => ({
+export const updateTaskAC = (updateInfo: UpdateInfo, socket) => ({
   type: updateTask.REQUEST,
   payload: updateInfo,
+  socket,
 });
-export const deleteTaskAC = (idToDelete: number) => ({
+export const deleteTaskAC = (idToDelete: number, socket) => ({
   type: deleteTask.REQUEST,
   payload: idToDelete,
+  socket,
 });
-export const setTodosAC = (newArray: ITodos[]) => ({
+
+export const setTodosAC = (newArray: ITodos[], socket) => ({
   type: setTodos.REQUEST,
   payload: newArray,
+  socket,
 });
 
 export default todoReducer;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import TodosCreator from './TodosCreator';
 import {
@@ -6,8 +6,10 @@ import {
   changeIsConfirmedAllStatusAC,
 } from '../../../../redux/reducers/todoReducer';
 import { ITodos, completeAllObj } from '../../../../redux/types';
+import SocketContext from '../../../../socketContext';
 
 const TodosCreatorContainer: React.FunctionComponent = () => {
+  const socket = useContext(SocketContext);
   const todosAll = useSelector((state) => state.todoReducer.todosAll);
   const dispatch = useDispatch();
 
@@ -36,7 +38,7 @@ const TodosCreatorContainer: React.FunctionComponent = () => {
       todosIdToUpdate,
     };
     setIsConfirmedAllStatus(!isConfirmedAllStatus);
-    dispatch(changeIsConfirmedAllStatusAC(body));
+    dispatch(changeIsConfirmedAllStatusAC(body, socket));
   };
 
   const onChangeInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -51,7 +53,7 @@ const TodosCreatorContainer: React.FunctionComponent = () => {
           title: inputValue,
           isCompleted: false,
         };
-        dispatch(createTaskAC(newTask));
+        dispatch(createTaskAC(newTask, socket));
         setInputValue('');
       }
     }
