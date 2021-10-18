@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { io } from 'socket.io-client';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentUserFromLSAC } from '../redux/reducers/authReducer';
 import Nav from './Nav';
 import Header from './Header';
@@ -11,6 +11,7 @@ import SocketContext from '../socketContext';
 
 const App: React.FunctionComponent = () => {
   const classes = useStyles();
+  const userId = useSelector((state) => state.authReducer.user.id);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -21,6 +22,7 @@ const App: React.FunctionComponent = () => {
   }, []);
 
   const socket = io(config.url);
+  socket.emit('join-room', userId);
 
   return (
     <SocketContext.Provider value={socket}>

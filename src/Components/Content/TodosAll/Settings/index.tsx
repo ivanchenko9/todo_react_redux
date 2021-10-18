@@ -44,6 +44,7 @@ const Settings: React.FunctionComponent = () => {
 
   const onClearCompletedClick = async () => {
     const newArray = await fetchToAPI.clearDone();
+    console.log('After clearCompletedDone ===> ', newArray);
     dispatch(setTodosAC(newArray, socket));
   };
 
