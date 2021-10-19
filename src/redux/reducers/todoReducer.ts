@@ -1,4 +1,10 @@
-import { ITodos, TodoState, TodoAction, UpdateInfo } from '../types';
+import {
+  ITodos,
+  TodoState,
+  TodoAction,
+  UpdateInfo,
+  socketUpdateObj,
+} from '../types';
 import {
   getTodos,
   createTask,
@@ -7,6 +13,7 @@ import {
   updateTask,
   deleteTask,
   logout,
+  socketUpdate,
 } from '../actions';
 
 const initilState: TodoState = {
@@ -53,6 +60,12 @@ const todoReducer = (state = initilState, action: TodoAction): TodoState => {
         todosAll: action.payload,
       };
     }
+    case socketUpdate.SUCCESS: {
+      return {
+        ...state,
+        todosAll: action.payload,
+      };
+    }
     case logout.SUCCESS: {
       return {
         ...state,
@@ -96,6 +109,11 @@ export const setTodosAC = (newArray: ITodos[], socket) => ({
   type: setTodos.REQUEST,
   payload: newArray,
   socket,
+});
+
+export const socketUpdateAC = (body: socketUpdateObj) => ({
+  type: socketUpdate.REQUEST,
+  payload: body,
 });
 
 export default todoReducer;

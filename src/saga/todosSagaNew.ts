@@ -7,7 +7,16 @@ import {
   changeIsConfirmedAllStatus,
   updateTask,
   deleteTask,
+  socketUpdate,
 } from '../redux/actions';
+import {
+  GOT_TODOS,
+  NEW_TODO_ADDED,
+  TODO_UPDATED,
+  TODO_DELETED,
+  DONE_WERE_CLEARED,
+  CHANGE_IS_CONFIRMED_ALL_STATUS_CHANGED,
+} from '../redux/socketTypes';
 
 function* getTodosWorker(action) {
   try {
@@ -116,6 +125,62 @@ function* deleteTaskWorker(action) {
   }
 }
 
+function* socketUpdateWorker(action) {
+  try {
+    switch (action.payload.type) {
+      case GOT_TODOS:
+        yield put({
+          type: socketUpdate.SUCCESS,
+          payload: action.payload.payload,
+          message: 'Setted new todos!',
+        });
+        break;
+      case NEW_TODO_ADDED:
+        yield put({
+          type: socketUpdate.SUCCESS,
+          payload: action.payload.payload,
+          message: 'Setted new todos!',
+        });
+        break;
+      case TODO_UPDATED:
+        yield put({
+          type: socketUpdate.SUCCESS,
+          payload: action.payload.payload,
+          message: 'Setted new todos!',
+        });
+        break;
+      case TODO_DELETED:
+        yield put({
+          type: socketUpdate.SUCCESS,
+          payload: action.payload.payload,
+          message: 'Setted new todos!',
+        });
+        break;
+      case DONE_WERE_CLEARED:
+        yield put({
+          type: socketUpdate.SUCCESS,
+          payload: action.payload.payload,
+          message: 'Setted new todos!',
+        });
+        break;
+      case CHANGE_IS_CONFIRMED_ALL_STATUS_CHANGED:
+        yield put({
+          type: socketUpdate.SUCCESS,
+          payload: action.payload.payload,
+          message: 'Setted new todos!',
+        });
+        break;
+      default:
+    }
+  } catch (error) {
+    yield put({
+      type: socketUpdate.FAILED,
+      message: 'Failed to update todos!',
+    });
+    console.error(error);
+  }
+}
+
 export function* getTodosWatcher() {
   yield takeEvery(getTodos.REQUEST, getTodosWorker);
 }
@@ -141,4 +206,8 @@ export function* updateTaskWatcher() {
 
 export function* deleteTaskWatcher() {
   yield takeEvery(deleteTask.REQUEST, deleteTaskWorker);
+}
+
+export function* socketUpdateWatcher() {
+  yield takeEvery(socketUpdate.REQUEST, socketUpdateWorker);
 }

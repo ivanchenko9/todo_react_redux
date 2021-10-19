@@ -47,6 +47,11 @@ export interface completeAllObj {
   todosIdToUpdate: number[];
 }
 
+export interface socketUpdateObj {
+  type: string;
+  body: ITodos[];
+}
+
 interface GetTodosSuccessAction {
   type: getTodos.SUCCESS;
   payload: ITodos[];

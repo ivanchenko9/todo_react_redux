@@ -4,6 +4,7 @@ const UPDATE_TASK = 'UPDATE_TASK';
 const DELETE_TASK = 'DELETE_TASK';
 const SET_TODOS = 'SET_TODOS';
 const CHANGE_IS_CONFIRMED_ALL_STATUS = 'CHANGE_IS_CONFIRMED_ALL_STATUS';
+const SOCKET_UPDATE = 'SOCKET_UPDATE';
 
 const SET_CURRENT_USER = 'SET_CURRENT_USER';
 const SET_CURRENT_USER_FROM_LC = 'SET_CURRENT_USER_FROM_LC';
@@ -29,3 +30,4 @@ export const setCurrentUser = createAction(SET_CURRENT_USER);
 export const setCurrentUserFromLS = createAction(SET_CURRENT_USER_FROM_LC);
 export const registration = createAction(REGISTRATION);
 export const logout = createAction(LOGOUT);
+export const socketUpdate = createAction(SOCKET_UPDATE);

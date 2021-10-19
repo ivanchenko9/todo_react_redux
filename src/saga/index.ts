@@ -1,18 +1,4 @@
 import { all } from 'redux-saga/effects';
-// import {
-//   getTodosWatcher,
-//   createTaskWatcher,
-//   setTodosWatcher,
-//   updateTaskWatcher,
-//   deleteTaskWatcher,
-//   changeIsConfirmedAllStatusWatcher,
-// } from './todosSaga';
-// import {
-//   setCurrentUserWatcher,
-//   setCurrentUserFromLSWatcher,
-//   registrationWatcher,
-//   logoutWatcher,
-// } from './authSaga';
 
 import {
   getTodosWatcher,
@@ -21,6 +7,7 @@ import {
   updateTaskWatcher,
   deleteTaskWatcher,
   changeIsConfirmedAllStatusWatcher,
+  socketUpdateWatcher,
 } from './todosSagaNew';
 import {
   setCurrentUserWatcher,
@@ -37,6 +24,7 @@ export default function* rootWatcher() {
     changeIsConfirmedAllStatusWatcher(),
     updateTaskWatcher(),
     deleteTaskWatcher(),
+    socketUpdateWatcher(),
     setCurrentUserWatcher(),
     setCurrentUserFromLSWatcher(),
     registrationWatcher(),

@@ -16,34 +16,6 @@ const TodosAll: React.FunctionComponent = () => {
     dispatch(getTodosAC(socket));
   }, []);
 
-  socket.on('got-todos', (newArr) => {
-    console.log('Get newAr in "got-todos" -> ', newArr);
-    dispatch(setTodosAC(newArr, socket));
-  });
-  socket.on('new-todo-added', (newArr) => {
-    console.log('Get newAr in "new-todo-added" -> ', newArr);
-    dispatch(setTodosAC(newArr, socket));
-  });
-  socket.on('todo-updated', (newArr) => {
-    console.log('Get newAr in "todo-updated" -> ', newArr);
-    dispatch(setTodosAC(newArr, socket));
-  });
-  socket.on('todo-deleted', (newArr) => {
-    console.log('Get newAr in "todo-deleted" -> ', newArr);
-    dispatch(setTodosAC(newArr, socket));
-  });
-  socket.on('done-were-cleared', (newArr) => {
-    console.log('Get newAr in "done-were-cleared" -> ', newArr);
-    dispatch(setTodosAC(newArr, socket));
-  });
-  socket.on('change-is-confirmed-all-status-changed', (newArr) => {
-    console.log(
-      'Get newAr in "change-is-confirmed-all-status-changed" -> ',
-      newArr,
-    );
-    dispatch(setTodosAC(newArr, socket));
-  });
-
   if (isAuthenticated) {
     return (
       <section>

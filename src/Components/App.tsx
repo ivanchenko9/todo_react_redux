@@ -8,6 +8,7 @@ import Content from './Content';
 import useStyles from '../styles';
 import config from '../../config';
 import SocketContext from '../socketContext';
+import { socketUpdateAC } from '../redux/reducers/todoReducer';
 
 const App: React.FunctionComponent = () => {
   const classes = useStyles();
@@ -23,6 +24,10 @@ const App: React.FunctionComponent = () => {
 
   const socket = io(config.url);
   socket.emit('join-room', userId);
+
+  socket.on('notification', (body) => {
+    dispatch(socketUpdateAC(body));
+  });
 
   return (
     <SocketContext.Provider value={socket}>
